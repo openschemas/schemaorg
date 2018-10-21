@@ -1,5 +1,5 @@
 __pycache__
 *.pyc
-puzzles.egg-info/
+schemaorg.egg-info
 build
 dist

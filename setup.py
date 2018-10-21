@@ -7,7 +7,7 @@ import os
 ################################################################################
 
 def get_lookup():
-    '''get version by way of sregistry.version, returns a 
+    '''get version by way of version.py, returns a 
     lookup dictionary with several global variables without
     needing to import singularity
     '''

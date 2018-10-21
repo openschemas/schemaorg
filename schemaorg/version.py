@@ -29,4 +29,5 @@ LICENSE = "LICENSE"
 ################################################################################
 # Global requirements
 
-INSTALL_REQUIRES = ()
+INSTALL_REQUIRES = (
+)
