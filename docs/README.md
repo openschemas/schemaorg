@@ -1,3 +1,9 @@
+---
+layout: null
+title: Schemaorg Python
+permalink: /
+---
+
 # Schemaorg Python
 
 This is early development of schemaorg Python, and in this document I will detail
