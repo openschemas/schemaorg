@@ -1,0 +1,5 @@
+__pycache__
+*.pyc
+puzzles.egg-info/
+build
+dist
