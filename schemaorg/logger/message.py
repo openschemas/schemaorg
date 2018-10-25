@@ -353,4 +353,4 @@ def convert2boolean(arg):
 
 
 SchemaorgMessage.spinner = Spinner()
-bot = SchemaorgyMessage()
+bot = SchemaorgMessage()

@@ -1,0 +1,14 @@
+include AUTHORS.md
+include .github/CONTRIBUTING.md
+include CHANGELOG.md
+include LICENSE
+include README.md
+recursive-include schemaorg *
+recursive-include schemaorg * * * *.csv
+recursive-include schemaorg * * *.html
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+recursive-exclude tests *
+recursive-exclude docs *
+recursive-exclude src *
+recursive-exclude .git *

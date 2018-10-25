@@ -23,6 +23,7 @@ import pwd
 import re
 import shutil
 import tempfile
+import yaml
 import csv
 
 import json
@@ -34,45 +35,11 @@ from subprocess import (
 )
 import os
 
-################################################################################
-# Software Versions
-################################################################################
-
-
-def get_schemaorg_version():
-    '''determine the schemaorg version to use based on an environmental variable
-       first followed by  using the latest.
-    '''
-    from schemaorg.defaults import SCHEMAORG_VERSION as version
-
-    if version is None:
-        base = get_database()
-        versions = os.listdir(base)
-        versions.sort()
-        version = versions[-1]
-
-    bot.debug("schemaorg version %s selected" % version)
-    return version
 
 def get_installdir():
     '''get_installdir returns the installation directory of the application
     '''
     return os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-
-
-def get_release(version = None):
-    '''get a subfolder for a particular release, defaults to latest
-    '''
-    base = get_database()
-    if version is None:
-        version = get_schemaorg_version()
-    return os.path.join(base, "releases", version)
-
-
-def get_database():
-    '''get the data folder with "release" and "ext" subfolders
-    '''
-    return os.path.join(get_installdir(), "data")
 
 
 def run_command(cmd, sudo=False):
@@ -234,6 +201,46 @@ def read_file(filename, mode="r", readlines=True):
             content = filey.read()
     return content
 
+# Yaml
+
+def read_yaml(filename, mode='r', quiet=False):
+    '''read a yaml file, only including sections between dashes
+    '''
+    stream = read_file(filename, mode, readlines=False)
+    return _read_yaml(stream, quiet=quiet)
+
+
+def write_yaml(yaml_dict, filename, mode="w"):
+    '''write a dictionary to yaml file
+ 
+       Parameters
+       ==========
+       yaml_dict: the dict to print to yaml
+       filename: the output file to write to
+       pretty_print: if True, will use nicer formatting
+    '''
+    with open(filename, mode) as filey:
+        filey.writelines(yaml.dump(yaml_dict))
+    return filename
+
+   
+def _read_yaml(section, quiet=False):
+    '''read yaml from a string, either read from file (read_frontmatter) or 
+       from yml file proper (read_yaml)
+
+       Parameters
+       ==========
+       section: a string of unparsed yaml content.
+    '''
+    metadata = {}
+    docs = yaml.load_all(section)
+    for doc in docs:
+        if isinstance(doc, dict):
+            for k,v in doc.items():
+                if not quiet:
+                    print('%s: %s' %(k,v))
+                metadata[k] = v
+    return metadata
 
 # Json
 
@@ -303,45 +310,3 @@ def read_csv(filename, mode='r', delim=',', header=None, keyfield=None):
             else:
                 data.append(row)
     return data
-
-# courtesy functions for schema.org exports
-
-'''
-List of available csv --------------------------------------
-all-layers-properties.csv  ext-health-lifesci-properties.csv
-all-layers-types.csv       ext-health-lifesci-types.csv
-ext-attic-properties.csv   ext-meta-properties.csv
-ext-attic-types.csv        ext-meta-types.csv
-ext-auto-properties.csv    ext-pending-properties.csv
-ext-auto-types.csv         ext-pending-types.csv
-ext-bib-properties.csv     schema-properties.csv
-ext-bib-types.csv          schema-types.csv
-'''
-
-def read_properties_csv(keyfield='id', version=None):
-    '''read in the properties csv (with all types), defaulting to using
-       the "id" as the lookup key. We do this because the properties listed
-       in the types csv include the full uri.
-  
-       Parameters
-       ==========
-       keyfield: the key to use to generate the lookup, a header in the csv
-       version: release version under data/releases to use, defaults to latest
-    '''
-    release_dir = get_release(version = version)
-    filename = os.path.join(release_dir, 'schema-properties.csv')
-    return read_csv(filename, keyfield=keyfield)
-
-
-def read_types_csv(keyfield='label', version=None):
-    '''read in the types csv, with default lookup key as "label" since the
-       likely use case will be the user searching for an item of interest.
-
-       Parameters
-       ==========
-       keyfield: the key to use to generate the lookup, a header in the csv
-       version: release version under data/releases to use, defaults to latest
-    '''
-    release_dir = get_release(version = version)
-    filename = os.path.join(release_dir, 'schema-types.csv')
-    return read_csv(filename, keyfield=keyfield)

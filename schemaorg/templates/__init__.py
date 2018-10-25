@@ -17,18 +17,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-__version__ = "0.0.10"
-AUTHOR = 'Vanessa Sochat'
-AUTHOR_EMAIL = 'vsochat@stanford.edu'
-NAME = 'schemaorg'
-PACKAGE_URL = "http://www.github.com/openschemas/schemaorg"
-KEYWORDS = 'openschemas, schema.org'
-DESCRIPTION = "Python functions for applied use of schema.org"
-LICENSE = "LICENSE"
+from schemaorg.utils import ( get_installdir, read_file )
+from schemaorg.logger import bot
+import os
 
-################################################################################
-# Global requirements
+def get_template(name="google/dataset.html"):
+    '''get a template from the templates folder base. By default, we return
+       the Google Datasets schema.org template, since there aren't any others
+       defined yet :)
 
-INSTALL_REQUIRES = (
-   ('pyaml', {'min_version': '17.12.1'}),
-)
+       Parameters
+       ==========
+       name: the name (subfolder and filename) of the template under templates
+
+    '''
+    filename = os.path.join(get_installdir(), 'templates', name)
+    if os.path.exists(filename)
+        return read_file(filename)

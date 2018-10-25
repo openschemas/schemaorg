@@ -1,0 +1,384 @@
+description: This Container profile specification presents a representation of a Container
+  such as Docker or Singularity that is used in scientific compute.
+edit_url: https://github.com/openschemas/specifications/tree/master/ContainerRecipe/specification.html
+gh_folder: https://github.com/openschemas/specifications/tree/master/ContainerRecipe
+gh_tasks: https://github.com/openschemas/specifications/labels/type%3A%20ContainerRecipe
+hierarchy: [Thing, CreativeWork, SoftwareSourceCode]
+mapping:
+- bsc_description: ''
+  cardinality: MANY
+  controlled_vocab: ''
+  description: An alias for the item.
+  example: ''
+  expected_types: [Text]
+  marginality: Recommended
+  parent: Thing
+  property: alternateName
+  type: ''
+  type_url: ''
+- bsc_description: Type of software e.g. database, tool, service. **Note:** Bioschemas
+    have removed [URL](http://schema.org/URL) from the Expected Types.
+  cardinality: MANY
+  controlled_vocab: Please indicate the container technology in all lowercase
+  description: Type of software application, e.g. 'Game, Multimedia'.
+  example: '{   "@type": ["SoftwareApplication", "Container"],   "applicationCategory":
+    "singularity" }'
+  expected_types: [Text]
+  marginality: Optional
+  parent: ContainerRecipe
+  property: applicationCategory
+  type: ''
+  type_url: ''
+- bsc_description: The command for a ContainerRecipe is typically a set of extra arguments
+    that are added to the entrypoint in a default running scenario
+  cardinality: MANY
+  controlled_vocab: ''
+  description: The command for a ContainerRecipe is typically a set of extra arguments
+    that are added to the entrypoint in a default running scenario
+  example: ''
+  expected_types: [Text]
+  marginality: Recommended
+  parent: ContainerRecipe
+  property: brands
+  type: ''
+  type_url: ''
+- bsc_description: a special list of keywords to describe the underlying technologies
+    (e.g., Docker) that the container recipe affords building.
+  cardinality: MANY
+  controlled_vocab: ''
+  description: a special list of keywords to describe the underlying technologies
+    (e.g., Docker) that the container recipe affords building.
+  example: ''
+  expected_types: [Text]
+  marginality: Recommended
+  parent: ContainerRecipe
+  property: brands
+  type: ''
+  type_url: ''
+- bsc_description: Publication about this software.
+  cardinality: MANY
+  controlled_vocab: ''
+  description: A citation or reference to another creative work, such as another publication,
+    web page, scholarly article, etc.
+  example: '{ "@type": ["SoftwareApplication", "Tool"], "citation": "https://dx.doi.org/10.1016/S0022-2836(05)80360-2"
+    }'
+  expected_types: [CreativeWork, Text]
+  marginality: Recommended
+  parent: CreativeWork
+  property: citation
+  type: ''
+  type_url: ''
+- bsc_description: A ContainerImage is the binary or associated shasum that references
+    a particular grouping of layers to form a complete images.
+  cardinality: ONE
+  controlled_vocab: ''
+  description: A ContainerImage is the binary or associated shasum that references
+    a particular grouping of layers to form a complete images.
+  example: ''
+  expected_types: [ContainerImage]
+  marginality: Recommended
+  parent: ContainerRecipe
+  property: ContainerImage
+  type: ''
+  type_url: ''
+- bsc_description: ''
+  cardinality: ONE
+  controlled_vocab: ''
+  description: The date on which the CreativeWork was created or the item was added
+    to a DataFeed.
+  example: '{ "@type": ["SoftwareApplication", "Tool"], "dateCreated": "2108-06-13"
+    }'
+  expected_types: [Date, DateTime]
+  marginality: Optional
+  parent: CreativeWork
+  property: dateCreated
+  type: ''
+  type_url: ''
+- bsc_description: ''
+  cardinality: ONE
+  controlled_vocab: ''
+  description: The date on which the CreativeWork was most recently modified or when
+    the item's entry was modified within a DataFeed.
+  example: '{ "@type": ["SoftwareApplication", "Tool"], "dateModified": "2108-08-07"
+    }'
+  expected_types: [Date, DateTime]
+  marginality: Optional
+  parent: CreativeWork
+  property: dateModified
+  type: ''
+  type_url: ''
+- bsc_description: a linux container
+  cardinality: ONE
+  controlled_vocab: ''
+  description: A description of the item.
+  example: ''
+  expected_types: [Text]
+  marginality: Minimum
+  parent: Thing
+  property: description
+  type: ''
+  type_url: ''
+- bsc_description: ''
+  cardinality: MANY
+  controlled_vocab: ''
+  description: If the file can be downloaded, URL to download the binary. For containers
+    without an exposed wget url or similar, this can be the pull command.
+  example: '{   "@type": ["SoftwareApplication", "Tool"],   "downloadURL": "https://github.com/sacdallago/cellmap"
+    }'
+  expected_types: [URL]
+  marginality: Optional
+  parent: ContainerRecipe
+  property: downloadUrl
+  type: ''
+  type_url: ''
+- bsc_description: The entrypoint is the executable that is called within the container
+    when the user executes it, typically via a "run" or equivalent command.
+  cardinality: MANY
+  controlled_vocab: ''
+  description: The entrypoint is the executable that is called within the container
+    when the user executes it, typically via a "run" or equivalent command.
+  example: ''
+  expected_types: [Text]
+  marginality: Recommended
+  parent: ContainerRecipe
+  property: entrypoint
+  type: ''
+  type_url: ''
+- bsc_description: Please choose values from [EDAM:Operation](http://edamontology.org/operation_0004).
+  cardinality: MANY
+  controlled_vocab: '[EDAM:Operation](http://edamontology.org/operation_0004)'
+  description: Features or modules provided by this application (and possibly required
+    by other applications).
+  example: '{   "@type": ["SoftwareApplication", "Tool"],   "featureList": ["http://edamontology.org/topic_0821",
+    "http://edamontology.org/topic_0128"] }'
+  expected_types: [Text, URL]
+  marginality: Minimum
+  parent: ContainerRecipe
+  property: featureList
+  type: ''
+  type_url: ''
+- bsc_description: Used to describe tools included into suites/bundles/workflows.
+  cardinality: MANY
+  controlled_vocab: ''
+  description: Indicates an item or CreativeWork that is part of this item, or CreativeWork
+    (in some sense).
+  example: ''
+  expected_types: [CreativeWork]
+  marginality: Optional
+  parent: CreativeWork
+  property: hasPart
+  type: ''
+  type_url: ''
+- bsc_description: A help section is not present for all container technologies, but
+    is typically a blurb of text that can be shown to the user to give detais about
+    runtime usage or similar.
+  cardinality: ONE
+  controlled_vocab: ''
+  description: A help section is not present for all container technologies, but is
+    typically a blurb of text that can be shown to the user to give detais about runtime
+    usage or similar.
+  example: ''
+  expected_types: [Text]
+  marginality: Recommended
+  parent: ContainerRecipe
+  property: help
+  type: ''
+  type_url: ''
+- bsc_description: Unique identifier for the container, typically corresponding to
+    a uri to designate a registry source
+  cardinality: ONE
+  controlled_vocab: ''
+  description: The identifier property represents any kind of identifier for any kind
+    of <a class="localLink" href="http://schema.org/Thing">Thing</a>, such as ISBNs,
+    GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing
+    many of these, either as textual strings or as URL (URI) links. See <a href="http://schema.org/docs/datamodel.html#identifierBg">background
+    notes</a> for more details.
+  example: <username>/<repository>:<tag>@<hash>
+  expected_types: [PropertyValue, Text, URL]
+  marginality: Recommended
+  parent: Thing
+  property: identifier
+  type: ''
+  type_url: ''
+- bsc_description: The input format of the data. Must be one of the [EDAM:Data](http://edamontology.org/data_0006)
+    concept labels or one of its synonyms.
+  cardinality: MANY
+  controlled_vocab: '[EDAM:Data](http://edamontology.org/data_0006)'
+  description: ''
+  example: '{ "@type": ["SoftwareApplication", "Tool"], "input": ["http://edamontology.org/data_2977",
+    "http://edamontology.org/data_2976"] }'
+  expected_types: [URL]
+  marginality: Recommended
+  parent: ContainerRecipe
+  property: input
+  type: external
+  type_url: http://semanticscience.org/resource/SIO_000230
+- bsc_description: ''
+  cardinality: ONE
+  controlled_vocab: '[EDAM:Topic](http://edamontology.org/topic_0003)'
+  description: Keywords or tags used to describe this content. Multiple entries in
+    a keywords list are typically delimited by commas.
+  example: '{ "@type": ["SoftwareApplication", "Tool"], "ketwords": "Biology, chemistry,
+    medicine" }'
+  expected_types: [Text]
+  marginality: Optional
+  parent: CreativeWork
+  property: keywords
+  type: ''
+  type_url: ''
+- bsc_description: a list of keywords to describe the ContainerImage that the ContainerRecipe
+    will build
+  cardinality: MANY
+  controlled_vocab: ''
+  description: Keywords or tags used to describe this content. Multiple entries in
+    a keywords list are typically delimited by commas.
+  example: ''
+  expected_types: [Text]
+  marginality: Recommended
+  parent: CreativeWork
+  property: keywords
+  type: ''
+  type_url: ''
+- bsc_description: Labels are a list of key, value pairs that encompass named metadata
+    for the container.
+  cardinality: MANY
+  controlled_vocab: ''
+  description: Labels are a list of key, value pairs that encompass named metadata
+    for the container.
+  example: ''
+  expected_types: [Text]
+  marginality: Recommended
+  parent: ContainerRecipe
+  property: labels
+  type: ''
+  type_url: ''
+- bsc_description: The applicable software license. **Note:** Bioschemas have changed
+    the Expected Types to [URL](http://schema.org/URL) or [Text](http://schema.org/Text).
+  cardinality: MANY
+  controlled_vocab: ''
+  description: A license document that applies to this content, typically indicated
+    by URL.
+  example: '{ "@type": ["SoftwareApplication", "Tool"], "license": "https://www.apache.org/licenses/LICENSE-2.0"
+    }'
+  expected_types: [Text, URL]
+  marginality: Recommended
+  parent: CreativeWork
+  property: license
+  type: ''
+  type_url: ''
+- bsc_description: ''
+  cardinality: ONE
+  controlled_vocab: ''
+  description: The name of the item.
+  example: ''
+  expected_types: [Text]
+  marginality: Minimum
+  parent: Thing
+  property: name
+  type: ''
+  type_url: ''
+- bsc_description: Operating systems on which the container runs, typically Linux
+    derivatives and (for some containers) Windows.
+  cardinality: MANY
+  controlled_vocab: ''
+  description: Operating systems supported (Windows 7, OSX 10.6, Android 1.6).
+  example: '{   "@type": ["SoftwareApplication", "Tool"],   "operatingSystem": ["Windows
+    7 or above", "Linux/Unix", "Mac/Apple"] }'
+  expected_types: [Text]
+  marginality: Optional
+  parent: ContainerRecipe
+  property: operatingSystem
+  type: ''
+  type_url: ''
+- bsc_description: The output format of the data. Must be one of the [EDAM:Data](http://edamontology.org/data_0006)
+    concept labels or one of its synonyms.
+  cardinality: MANY
+  controlled_vocab: '[EDAM:Data](http://edamontology.org/data_0006)'
+  description: ''
+  example: '{ "@type": ["SoftwareApplication", "Tool"], "input": ["http://edamontology.org/data_1383",
+    "http://edamontology.org/data_1384"] }'
+  expected_types: [URL]
+  marginality: Recommended
+  parent: ContainerRecipe
+  property: output
+  type: external
+  type_url: http://semanticscience.org/resource/SIO_000229
+- bsc_description: ''
+  cardinality: MANY
+  controlled_vocab: ''
+  description: The publisher of the creative work.
+  example: '{   "@type": ["SoftwareApplication", "Tool"],   "publisher": {     "@type":
+    "Organization",     "name": "National Center for Biotechnology Information National
+    Library of Medicine",     "alternatName": "NCBI NLM"   } }'
+  expected_types: [Organization, Person]
+  marginality: Recommended
+  parent: CreativeWork
+  property: publisher
+  type: ''
+  type_url: ''
+- bsc_description: A documentation for the container, typically showing install steps,
+    usage, and a changelog.
+  cardinality: MANY
+  controlled_vocab: ''
+  description: Software application help.
+  example: '{   "@type": ["SoftwareApplication", "Tool"],   "softwareHelp": "https://biotools.readthedocs.io/en/latest/"
+    }'
+  expected_types: [CreativeWork]
+  marginality: Optional
+  parent: ContainerRecipe
+  property: softwareHelp
+  type: ''
+  type_url: ''
+- bsc_description: ''
+  cardinality: MANY
+  controlled_vocab: ''
+  description: 'Component dependency requirements for application. This includes runtime
+    environments and shared libraries that are not included in the application distribution
+    package, but required to run the application (Examples: DirectX, Java or .NET
+    runtime). Supersedes requirements.'
+  example: '{   "@type": ["SoftwareApplication", "Tool"],   "softwareRequirements":
+    "JRE 8.0 or above" }'
+  expected_types: [Text, URL]
+  marginality: Optional
+  parent: ContainerRecipe
+  property: softwareRequirements
+  type: ''
+  type_url: ''
+- bsc_description: version of the container instance
+  cardinality: ONE
+  controlled_vocab: ''
+  description: Version of the software instance.
+  example: '{   "@type": ["SoftwareApplication", "Tool"],   "softwareVersion": "1.0.2"
+    }'
+  expected_types: [Text]
+  marginality: Minimum
+  parent: ContainerRecipe
+  property: softwareVersion
+  type: ''
+  type_url: ''
+- bsc_description: URL of the container, typically associated with a registry that
+    shows the ContainerRecipe, vulnerability scans, and other metadata. This property
+    can be used on a page listing many containers to indicate each individual container's
+    page.
+  cardinality: ONE
+  controlled_vocab: ''
+  description: URL of the item.
+  example: ''
+  expected_types: [URL]
+  marginality: Minimum
+  parent: Thing
+  property: url
+  type: ''
+  type_url: ''
+name: ContainerRecipe
+parent_type: SoftwareSourceCode
+spec_info: {description: This Container profile specification presents a representation
+    of a Container such as Docker or Singularity that is used in scientific compute.,
+  full_example: 'https://www.github.com/openschemas/specifications/tree/master/ContainerRecipe/examples/',
+  version: 0.0.1, version_date: 20181021T214745}
+spec_type: Profile
+status: revision
+subtitle: Bioschemas specification describing a Container (e.g., Docker, Singularity)
+  used in Scientific Compute
+use_cases_url: https://www.github.com/openschemas/spec-container
+version: 0.0.1
