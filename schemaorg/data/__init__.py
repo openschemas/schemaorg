@@ -42,7 +42,7 @@ def get_schemaorg_version():
     from schemaorg.defaults import SCHEMAORG_VERSION as version
 
     if version is None:
-        version = versions[-1]
+        version = get_versions()[-1]
 
     bot.debug("schemaorg version %s selected" % version)
     return version
@@ -103,3 +103,21 @@ def read_types_csv(keyfield='label', version=None):
     release_dir = get_release(version = version)
     filename = os.path.join(release_dir, 'schema-types.csv')
     return read_csv(filename, keyfield=keyfield)
+
+
+def find_similar_types(term, version=None):
+    '''find similar types, with intent to show to the user in case 
+       capitalization was off.
+
+       Parameters
+       ==========
+       term: a term to search for, in entirety. Casing doesn't matter
+       version: release version under data/releases to use, defaults to latest
+    '''
+    typs = read_types_csv(version=version)
+
+    # In case the user provided a url, remove it
+    term = term.split('/')[-1].lower()
+
+    # Look for entire term
+    return [x for x in typs if term in x.lower()]

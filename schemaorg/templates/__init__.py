@@ -32,5 +32,5 @@ def get_template(name="google/dataset.html"):
 
     '''
     filename = os.path.join(get_installdir(), 'templates', name)
-    if os.path.exists(filename)
+    if os.path.exists(filename):
         return read_file(filename)

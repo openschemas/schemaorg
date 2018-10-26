@@ -14,8 +14,8 @@ local file, ContainerRecipe.yml. If/when the community can add some representati
 to schema.org, you would retrieve the types as follows:
 
 from schemaorg.data import ( read_types_csv, read_properties_csv )
-typs = read_types_csv()
 
+typs = read_types_csv()
 props = read_properties_csv()
 
 
@@ -31,6 +31,19 @@ and help the community to define the right spot :)
  - https://github.com/schemaorg/schemaorg/issues/2059#issuecomment-427208907
 
 '''
+
+## A Person
+
+from schemaorg.main import Schema
+person = Schema("Person")
+
+# Specification base set to http://www.schema.org
+# Using Version 3.4
+# Found http://www.schema.org/Person
+
+# TODO: define an Organization (or Person) for dataset
+#       do the same for ContainerRecipe / ContainerImage
+#       write into function
 
 ## A ContainerRecipe
 # Thing > CreativeWork > SoftwareSourceCode > ContainerRecipe
@@ -89,6 +102,101 @@ variableMeasured  * recommended
 from spython.main.parse import DockerRecipe
 parser = DockerRecipe()
 parser.load("Dockerfile")
+
+# Let's do this! We've created a function to (help with) filling in required fields
+
+def write_dataset(schema_type="Dataset",
+                  context="http://schema.org/"):
+
+    '''write a dataset. By default, this means a schema.org "Dataset" and we use
+       the Dataset.html template. You can substitute any of the input parameters
+       to change these variables.
+    '''
+    #TODO: This function will return this class
+
+    metadata = {"@context": context,
+                "@type": schema_type}
+
+    spec = Schema(schema_type, base=context)
+
+   # TODO: the rest should be loaded from the spec above
+  "name":"NCDC Storm Events Database",
+  "description":"Storm Data is provided by the National Weather Service (NWS) and contain statistics on...",
+  "url":"https://catalog.data.gov/dataset/ncdc-storm-events-database",
+  "sameAs":"https://gis.ncdc.noaa.gov/geoportal/catalog/search/resource/details.page?id=gov.noaa.ncdc:C00510",
+  "keywords":[
+     "ATMOSPHERE > ATMOSPHERIC PHENOMENA > CYCLONES",
+     "ATMOSPHERE > ATMOSPHERIC PHENOMENA > DROUGHT",
+     "ATMOSPHERE > ATMOSPHERIC PHENOMENA > FOG",
+     "ATMOSPHERE > ATMOSPHERIC PHENOMENA > FREEZE"
+  ],
+  "creator":{
+     "@type":"Organization",
+     "url": "https://www.ncei.noaa.gov/",
+     "name":"OC/NOAA/NESDIS/NCEI > National Centers for Environmental Information, NESDIS, NOAA, U.S. Department of Commerce",
+     "contactPoint":{
+        "@type":"ContactPoint",
+        "contactType": "customer service",
+        "telephone":"+1-828-271-4800",
+        "email":"ncei.orders@noaa.gov"
+     }
+  },
+  "includedInDataCatalog":{
+     "@type":"DataCatalog",
+     "name":"data.gov"
+  },
+  "distribution":[
+     {
+        "@type":"DataDownload",
+        "encodingFormat":"CSV",
+        "contentUrl":"http://www.ncdc.noaa.gov/stormevents/ftp.jsp"
+     },
+     {
+        "@type":"DataDownload",
+        "encodingFormat":"XML",
+        "contentUrl":"http://gis.ncdc.noaa.gov/all-records/catalog/search/resource/details.page?id=gov.noaa.ncdc:C00510"
+     }
+  ],
+  "temporalCoverage":"1950-01-01/2013-12-18",
+  "spatialCoverage":{
+     "@type":"Place",
+     "geo":{
+        "@type":"GeoShape",
+        "box":"18.0 -65.0 72.0 172.0"
+     }
+  }
+}
+
+
+
+
+
+containerRecipe = alternateName
+applicationCategory
+brands
+citation          * recommended
+ContainerImage
+dateCreated
+dateModified
+description       * required
+downloadUrl
+entrypoint
+featureList
+hasPart
+help
+identifier        * recommended
+input
+keywords          * recommended
+labels
+license           * recommended
+name              * required
+operatingSystem
+output
+publisher
+softwareHelp
+softwareRequirements
+softwareVersion   * recommended (called version)
+url               * recommended
 
 
 ## A Container Image
