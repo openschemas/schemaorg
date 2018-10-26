@@ -105,19 +105,41 @@ parser.load("Dockerfile")
 
 # Let's do this! We've created a function to (help with) filling in required fields
 
-def write_dataset(schema_type="Dataset",
-                  context="http://schema.org/"):
+from schemaorg.main import Schema
+
+
+def make_person():
+
+    # Create an individual (persona)
+    person = Schema('Person')
+
+
+def make_dataset(schema_type="Dataset",
+                 context="http://schema.org",
+                 creator=None):
 
     '''write a dataset. By default, this means a schema.org "Dataset" and we use
        the Dataset.html template. You can substitute any of the input parameters
        to change these variables.
     '''
-    #TODO: This function will return this class
+    # If a creator is given, it must be a Person or Organization
+    if creator is not None:
+        if creator.label not in ['Organization', 'Person']:
+            bot.exit('creator must be an Organization or Person.')
+
+    # These are required and recommended properties
+    required_props = ["description", "name"]
+    recommended = []
+   
+
+    schema_type="SoftwareSourceCode"
+    context="http://schema.org"
+    spec = Schema(schema_type, base=context)
 
     metadata = {"@context": context,
-                "@type": schema_type}
+                "@type": spec.type}
 
-    spec = Schema(schema_type, base=context)
+
 
    # TODO: the rest should be loaded from the spec above
   "name":"NCDC Storm Events Database",

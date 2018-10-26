@@ -36,12 +36,13 @@ class Schema(object):
     def __init__(self, schema_type, version=None, base=None):
  
         # Does the user want a custom base?
+        self.type = None
         self._set_base(base)
         self._set_version(version)
         self.load_type(schema_type)
 
     def __str__(self):
-        return self.schema_type
+        return self.type
 
     def __repr__(self):
         return self.__str__()
@@ -105,8 +106,6 @@ class Schema(object):
            ==========
            schema_type: the type to load
         '''
-        # Ensure capitalized
-        schema_type = schema_type.capitalize()
 
         # Load type, followed by type attributes and properties
         self._load_type(schema_type) 
@@ -120,7 +119,7 @@ class Schema(object):
         lookup = read_properties_csv(version = self.version)
 
         # Keep them in a dictionary for now
-        properties = dict()
+        self.properties = dict()
 
         # Need to parse, split by comma and strip empty spaces
         props = self.type_spec['properties'].split(',')
@@ -128,12 +127,12 @@ class Schema(object):
 
         for prop in props:
             if prop in lookup:
-                properties[prop] = lookup[prop]
+                self.properties[prop] = lookup[prop]
 
         bot.info('Loaded %s properties for %s' %(len(properties), self.type))
 
     def _load_type(self, schema_type):
-        '''load the type file, depending on the set version. This means:
+        '''load the tyepe file, depending on the set version. This means:
            1. Setting the url to be the base (schema.org) followed by type
            2. Loading the types csv based on the version defined for the object
            3. Verifying that the type exists in the data
@@ -153,8 +152,8 @@ class Schema(object):
 
         # Print similar based on name, then exit
         else:
-            bot.error('%s is not a valid type!' % self.type)
-            self.print_similar_types()
+            bot.error('%s is not a valid type!' % schema_type)
+            self.print_similar_types(schema_type)
             sys.exit(1)
 
         bot.info('Found %s' % self.url)
@@ -178,12 +177,12 @@ class Schema(object):
 
 # Print
 
-    def print_similar_types(self):
+    def print_similar_types(self, schema_type = None):
         '''A courtesy function to print similar types based on name,
            if they are found.
         '''    
         # Find similar types by name
-        contenders = find_similar_types(self.type)
+        contenders = find_similar_types(schema_type or self.type)
 
         # If we find contenders, show the user
         if len(contenders) > 0:

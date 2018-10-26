@@ -114,6 +114,7 @@ def find_similar_types(term, version=None):
        term: a term to search for, in entirety. Casing doesn't matter
        version: release version under data/releases to use, defaults to latest
     '''
+    print(term)
     typs = read_types_csv(version=version)
 
     # In case the user provided a url, remove it
