@@ -34,9 +34,11 @@ import sys
 class Schema(object):
 
     def __init__(self, schema_type, version=None, base=None):
+
+        self.type = None
+        self.properties = {}
  
         # Does the user want a custom base?
-        self.type = None
         self._set_base(base)
         self._set_version(version)
         self.load_type(schema_type)
@@ -95,6 +97,32 @@ class Schema(object):
         bot.info('Using Version %s' % version)
         self.version = version
 
+# Properties
+
+    def add_property(self, name, value):
+        '''add a property, only given that it's defined under self._properties.
+    
+            Parameters
+            ==========
+            name: the name of the property, made to lowercase
+            value: the value to add
+        '''
+        if value not in ["", None]:
+            name = name.lower()
+            if name in self._properties:
+                lookup = self._properties[name]
+                self.properties[name] = value
+                bot.debug('%s set to %s' %(name, value))
+
+    def remove_property(self, name):
+        '''remove a property, meaning the instance property > self.properties
+    
+            Parameters
+            ==========
+            name: the name of the property, made to lowercase
+        '''
+        del self.properties[name.lower()] 
+
 # Load
 
     def load_type(self, schema_type):
@@ -114,12 +142,15 @@ class Schema(object):
 
     def _load_props(self):
         '''load properties based on the type defined for the object. Can
-           (or should) only be called wit load_type, so the two are in sync
+           (or should) only be called with load_type, so the two are in sync
+
+           self._properties: a lookup of those allowed, with definitions, etc.
+           self.properties: another lookup, but with the property values
         '''
         lookup = read_properties_csv(version = self.version)
 
         # Keep them in a dictionary for now
-        self.properties = dict()
+        self._properties = dict()
 
         # Need to parse, split by comma and strip empty spaces
         props = self.type_spec['properties'].split(',')
@@ -127,9 +158,11 @@ class Schema(object):
 
         for prop in props:
             if prop in lookup:
-                self.properties[prop] = lookup[prop]
 
-        bot.info('Loaded %s properties for %s' %(len(properties), self.type))
+                # The label is the most human friendly key
+                self._properties[lookup[prop]['label']] = lookup[prop]
+
+        bot.info('%s: found %s properties' %(self.type, len(self._properties)))
 
     def _load_type(self, schema_type):
         '''load the tyepe file, depending on the set version. This means:
@@ -169,10 +202,6 @@ class Schema(object):
             if attr not in ['properties']:
                 setattr(self, attr, self.type_spec[attr])
 
-    def _load_props(self):
-        '''load the properties csv file, depending on the set version.
-        '''
-        props = read_properties_csv(version = self.version)
 
 
 # Print

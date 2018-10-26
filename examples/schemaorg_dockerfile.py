@@ -107,11 +107,26 @@ parser.load("Dockerfile")
 
 from schemaorg.main import Schema
 
+person = make_person(name="@vsoch")
+dataset = make_dataset("SoftwareSourceCode",
+                       creator=person)
 
-def make_person():
+
+def make_person(name, url="", telephone="", email=""):
 
     # Create an individual (persona)
     person = Schema('Person')
+    contactPoint = Schema('ContactPoint')
+
+    contactPoint.properties['telephone']
+
+    # Update the contact point
+    contactPoint.add_property('telephone', telephone)
+    contactPoint.add_property('email', email)
+
+    # Update the person with it
+    person.add_property('contactPoint', contactPoint)
+    return person
 
 
 def make_dataset(schema_type="Dataset",
