@@ -32,18 +32,47 @@ and help the community to define the right spot :)
 
 '''
 
+from schemaorg.main.parse import RecipeParser
+
+# Step 1. Read in the recipe to know what we need
+
+recipe = "Recipe-SoftwareSourceCode.yml"
+parser = RecipeParser(recipe)
+
+
+'''
+TODO: based on recipe provided, need to programatically create Person and SoftwareSourceCode
+
+shared: {'required': ['description', 'name']}
+version: 1
+schemas: {'SoftwareSourceCode': {'required': ['citation'], 'recommended': [{'softwareVersion': 'version'}, 'citation', 'identifier', 'keywords', 'license', 'url', 'sameAs', 'spatialCoverage', 'temporalCoverage', 'variableMeasured']}, 'Person|Organization': {'required': ['name']}}
+
+In [5]: parser
+Out[5]: [schemaorg-recipe][Recipe-SoftwareSourceCode.yml]
+
+In [6]: parser.loaded
+Out[6]: 
+{'schemas': {'Person|Organization': {'required': ['name']},
+  'SoftwareSourceCode': {'recommended': [{'softwareVersion': 'version'},
+    'citation',
+    'identifier',
+    'keywords',
+    'license',
+    'url',
+    'sameAs',
+    'spatialCoverage',
+    'temporalCoverage',
+    'variableMeasured'],
+   'required': ['citation']}},
+ 'shared': {'required': ['description', 'name']},
+ 'version': 1}
+
 ## A Person
 
 from schemaorg.main import Schema
 person = Schema("Person")
 
-# Specification base set to http://www.schema.org
-# Using Version 3.4
-# Found http://www.schema.org/Person
-
-# TODO: define an Organization (or Person) for dataset
-#       do the same for ContainerRecipe / ContainerImage
-#       write into function
+'''
 
 ## A ContainerRecipe
 # Thing > CreativeWork > SoftwareSourceCode > ContainerRecipe
