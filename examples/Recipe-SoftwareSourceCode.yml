@@ -29,15 +29,9 @@
 # Shared Attributes
 ################################################################################
 
-shared: &shared
-  required:
-    - description
-    - name
-
 version: 1
 schemas:
   SoftwareSourceCode:
-    <<: *shared
     recommended:
       - softwareVersion: version
       - citation
@@ -51,7 +45,9 @@ schemas:
       - variableMeasured
     required:
       - citation
+      - description
+      - name
   Person|Organization:
-    <<: *shared
     required:
+      - description
       - name

@@ -4,7 +4,7 @@
 This script will demonstrate how we can extract metadata from a Dockerfile,
 and then generate a (html) web template to serve with it so that it is
 able to be indexed by Google Datasets (or ideally, similar with the recipe
-as a ContainerRecipe.
+as a ContainerRecipe).
 
 Author: @vsoch
 October 21, 2018
@@ -33,46 +33,108 @@ and help the community to define the right spot :)
 '''
 
 from schemaorg.main.parse import RecipeParser
-
-# Step 1. Read in the recipe to know what we need
-
-recipe = "Recipe-SoftwareSourceCode.yml"
-parser = RecipeParser(recipe)
-
-
-'''
-TODO: based on recipe provided, need to programatically create Person and SoftwareSourceCode
-
-shared: {'required': ['description', 'name']}
-version: 1
-schemas: {'SoftwareSourceCode': {'required': ['citation'], 'recommended': [{'softwareVersion': 'version'}, 'citation', 'identifier', 'keywords', 'license', 'url', 'sameAs', 'spatialCoverage', 'temporalCoverage', 'variableMeasured']}, 'Person|Organization': {'required': ['name']}}
-
-In [5]: parser
-Out[5]: [schemaorg-recipe][Recipe-SoftwareSourceCode.yml]
-
-In [6]: parser.loaded
-Out[6]: 
-{'schemas': {'Person|Organization': {'required': ['name']},
-  'SoftwareSourceCode': {'recommended': [{'softwareVersion': 'version'},
-    'citation',
-    'identifier',
-    'keywords',
-    'license',
-    'url',
-    'sameAs',
-    'spatialCoverage',
-    'temporalCoverage',
-    'variableMeasured'],
-   'required': ['citation']}},
- 'shared': {'required': ['description', 'name']},
- 'version': 1}
-
-## A Person
-
 from schemaorg.main import Schema
-person = Schema("Person")
+
+
+################################################################################
+## Example 1: Define Dockerfile with SoftwareSourceCode
+## Thing > CreativeWork > SoftwareSourceCode
+################################################################################
+
+# Step 1: Get required and recommended fields from recipe
+
+recipe = RecipeParser("Recipe-SoftwareSourceCode.yml")
+print(recipe.loaded)
+
+# Step 2: Generate a Person
+
+def make_person(name, url="", telephone="", email=""):
+
+    # Create an individual (persona)
+    person = Schema('Person')
+    contactPoint = Schema('ContactPoint')
+
+    # Update the contact point
+    contactPoint.add_property('telephone', telephone)
+    contactPoint.add_property('email', email)
+
+    # Update the person with it
+    person.add_property('contactPoint', contactPoint)
+    return person
+
+person = make_person(name="@vsoch")
+
+# Step 3: Extract SoftwareSourceCode attributes from Dockerfile
+
+# Step 2. Read in the recipe to tag
+from spython.main.parse import DockerRecipe
+parser = DockerRecipe("Dockerfile")
 
 '''
+recipe.loaded['schemas']['SoftwareSourceCode']
+Out[41]: 
+{'recommended': [{'softwareVersion': 'version'},
+  'citation',
+  'identifier',
+  'keywords',
+  'license',
+  'url',
+  'sameAs',
+  'spatialCoverage',
+  'temporalCoverage',
+  'variableMeasured'],
+ 'required': ['citation', 'description', 'name']}
+'''
+
+relations = {'creator': person}
+
+dataset = make_dataset("SoftwareSourceCode",
+                       attributes=attributes,
+                       relations=relations)
+
+# TODO: validate here, the function below should also take the parser and ensure
+# We have Person?Organization
+
+def make_schema_instance(schema_type="Dataset",
+                         context="http://schema.org",
+                         relations={})
+
+    '''write a dataset. By default, this means a schema.org "Dataset" and we use
+       the Dataset.html template. You can substitute any of the input parameters
+       to change these variables.
+    '''
+
+    # If a creator is given, it must be a Person or Organization
+    if creator is not None:
+        if creator.label not in ['Organization', 'Person']:
+            bot.exit('creator must be an Organization or Person.')
+
+    schema_type="SoftwareSourceCode"
+    context="http://schema.org"
+    spec = Schema(schema_type, base=context)
+
+    metadata = {"@context": context,
+                "@type": spec.type}
+
+
+
+
+
+# Step 2. Again use parser to validate what we've added
+
+
+
+# Get variables for each schema defined by parser
+for schema in parser.loaded['schemas']:
+    loaded = Schema(schema)
+
+
+
+################################################################################
+## Example 2: Define Dockerfile with ContainerRecipe
+##   Thing > CreativeWork > SoftwareSourceCode > ContainerRecipe
+################################################################################
+
 
 ## A ContainerRecipe
 # Thing > CreativeWork > SoftwareSourceCode > ContainerRecipe
@@ -127,61 +189,7 @@ temporalCoverage  * recommended
 variableMeasured  * recommended
 '''
 
-# Step 2. Read in the recipe to tag
-from spython.main.parse import DockerRecipe
-parser = DockerRecipe()
-parser.load("Dockerfile")
-
 # Let's do this! We've created a function to (help with) filling in required fields
-
-from schemaorg.main import Schema
-
-person = make_person(name="@vsoch")
-dataset = make_dataset("SoftwareSourceCode",
-                       creator=person)
-
-
-def make_person(name, url="", telephone="", email=""):
-
-    # Create an individual (persona)
-    person = Schema('Person')
-    contactPoint = Schema('ContactPoint')
-
-    contactPoint.properties['telephone']
-
-    # Update the contact point
-    contactPoint.add_property('telephone', telephone)
-    contactPoint.add_property('email', email)
-
-    # Update the person with it
-    person.add_property('contactPoint', contactPoint)
-    return person
-
-
-def make_dataset(schema_type="Dataset",
-                 context="http://schema.org",
-                 creator=None):
-
-    '''write a dataset. By default, this means a schema.org "Dataset" and we use
-       the Dataset.html template. You can substitute any of the input parameters
-       to change these variables.
-    '''
-    # If a creator is given, it must be a Person or Organization
-    if creator is not None:
-        if creator.label not in ['Organization', 'Person']:
-            bot.exit('creator must be an Organization or Person.')
-
-    # These are required and recommended properties
-    required_props = ["description", "name"]
-    recommended = []
-   
-
-    schema_type="SoftwareSourceCode"
-    context="http://schema.org"
-    spec = Schema(schema_type, base=context)
-
-    metadata = {"@context": context,
-                "@type": spec.type}
 
 
 
