@@ -1,0 +1,57 @@
+# Specification base using to http://www.schema.org
+# Using Version 3.4
+# Found http://www.schema.org/SoftwareSourceCode
+# This is the simple listing of requirements for schemaorg python to 
+# read and for the user to provide to create a complete entry for 
+# a container recipe (SoftwareSourceCode) as a Google Dataset (err, 
+# SoftwareSourceCode :) )
+
+## A ContainerRecipe
+# Thing > CreativeWork > SoftwareSourceCode > ContainerRecipe
+
+## A ContainerImage
+# Thing > ContainerImage
+
+# Attributes not listed are accepted, but not required or recommended. If an
+# attribute is not included officially with a specification release it will
+# be ignored.
+
+# Without a key:pair implies the key is equal to the value, e.g., "license"
+# in schema.org gets mapped to "license" for the Google dataset
+#  - license
+
+# With a key pair implies a mapping, "softwareVersion" for schema.org is mapped
+# to "version" for the Google Dataset
+#  - softwareVersion: version
+
+
+################################################################################
+# Shared Attributes
+################################################################################
+
+shared: &shared
+  required:
+    - description
+    - name
+
+version: 1
+schemas:
+  SoftwareSourceCode:
+    <<: *shared
+    recommended:
+      - softwareVersion: version
+      - citation
+      - identifier
+      - keywords
+      - license
+      - url
+      - sameAs
+      - spatialCoverage
+      - temporalCoverage
+      - variableMeasured
+    required:
+      - citation
+  Person|Organization:
+    <<: *shared
+    required:
+      - name
