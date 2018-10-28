@@ -44,7 +44,6 @@ schemas:
       - temporalCoverage
       - variableMeasured
     required:
-      - citation
       - description
       - name
   Person|Organization:

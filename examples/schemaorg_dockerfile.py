@@ -35,13 +35,12 @@ and help the community to define the right spot :)
 from schemaorg.main.parse import RecipeParser
 from schemaorg.main import Schema
 
-
 ################################################################################
 ## Example 1: Define Dockerfile with SoftwareSourceCode
 ## Thing > CreativeWork > SoftwareSourceCode
 ################################################################################
 
-# Step 1: Get required and recommended fields from recipe
+# Step 1: Show required and recommended fields from recipe
 
 recipe = RecipeParser("Recipe-SoftwareSourceCode.yml")
 print(recipe.loaded)
@@ -52,6 +51,7 @@ def make_person(name, url="", telephone="", email=""):
 
     # Create an individual (persona)
     person = Schema('Person')
+    person.add_property('name', name)
     contactPoint = Schema('ContactPoint')
 
     # Update the contact point
@@ -64,9 +64,8 @@ def make_person(name, url="", telephone="", email=""):
 
 person = make_person(name="@vsoch")
 
-# Step 3: Extract SoftwareSourceCode attributes from Dockerfile
+# Step 3: Create SoftwareSourceCode
 
-# Step 2. Read in the recipe to tag
 from spython.main.parse import DockerRecipe
 parser = DockerRecipe("Dockerfile")
 
@@ -83,10 +82,18 @@ Out[41]:
   'spatialCoverage',
   'temporalCoverage',
   'variableMeasured'],
- 'required': ['citation', 'description', 'name']}
+ 'required': ['description', 'name']}
 '''
 
-relations = {'creator': person}
+sourceCode = Schema("SoftwareSourceCode")
+sourceCode.add_property('creator', person)
+sourceCode.add_property('version', sourceCode.version)
+sourceCode.add_property('description', 'A Dockerfile build recipe')
+sourceCode.add_property('name', parser.fromHeader)
+
+# sourceCode.properties
+
+recipe.validate(sourceCode)
 
 dataset = make_dataset("SoftwareSourceCode",
                        attributes=attributes,
@@ -118,9 +125,6 @@ def make_schema_instance(schema_type="Dataset",
 
 
 
-
-
-# Step 2. Again use parser to validate what we've added
 
 
 

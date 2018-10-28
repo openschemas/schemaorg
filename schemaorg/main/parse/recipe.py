@@ -31,7 +31,7 @@ from schemaorg.utils import (
     write_yaml 
 )
 from schemaorg.main.parse.base import RecipeBase
-
+from schemaorg.main.parse.validate import validate
 
 class RecipeParser(RecipeBase):
 
@@ -169,7 +169,7 @@ class RecipeParser(RecipeBase):
 
 # Reading
 
-    def get_key(self, key='specifications'):
+    def get_key(self, key='schemas'):
         '''return a portion of the yml file based on key
 
            Parameters
@@ -180,3 +180,14 @@ class RecipeParser(RecipeBase):
         if not hasattr(self, 'loaded'):
             self.load(self.filename)
         return self.loaded[key]
+
+# Validation
+
+    def validate(self, schema):
+        '''validate a schema, meaning checking that it includes all properties
+           required by the recipe.
+        '''
+        if self.loaded:
+            return validate(schmema, self.loaded)
+        bot.error('Recipe has not been loaded. Try recipe.load().')
+        return False
