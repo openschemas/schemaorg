@@ -29,13 +29,13 @@ def validate(schema, recipe):
        loaded: the loaded recipe, rschemaorg.main.parse.RecipeParser.loaded
     '''
     # What is the recipe type?
-    has_mainschema = schema.type in recipe.loaded['schemas']
-    bot.info('Has primary schema %s defined: %s' % (schema.type,has_mainschema))
-    if not has_mainschema:
+    bot.info('Looking for primary schema %s definition' % schema.type)
+    if not schema.type in recipe.loaded['schemas']:
         bot.error('Missing main schema under recipe["schemas"]')
         return False
 
     # Required properties for main schema
+    bot.info('Looking for required relations for %s' % schema.type)
     for prop in recipe.loaded['schemas'][schema.type]['required']:
 
         # If it's not a property, it might be a subclass

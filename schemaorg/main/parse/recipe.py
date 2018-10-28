@@ -112,6 +112,10 @@ class RecipeParser(RecipeBase):
             # Read in standard yaml
             else:
                 self._load_yaml(file_path)
+
+
+            # Unpack or statements
+            self._finish_load()
             return self.loaded
 
 # Loading
@@ -135,6 +139,18 @@ class RecipeParser(RecipeBase):
         '''
         stream = read_file(file_path, readlines=False)
         self.loaded = frontmatter.loads(stream).metadata
+
+
+    def _finish_load(self):
+        '''The user is allowed to package "or" statements in the Yaml, meaning
+           that a redundant entry for an equally defined Person and Organization
+           could be written as "Person|Organization." To unwrap this, we put
+           each into its own duplicated field.
+        '''
+        for name, value in self.loaded['schemas'].items():
+            if "|" in name:
+                for part in name.split('|'):
+                    self.loaded['schemas'][part] = value
 
 # Saving
 

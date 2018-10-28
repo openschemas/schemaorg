@@ -46,22 +46,9 @@ recipe = RecipeParser("Recipe-SoftwareSourceCode.yml")
 print(recipe.loaded)
 
 # Step 2: Generate a Person
+from schemaorg.templates.google import make_person
 
-def make_person(name, description, url="", telephone="", email=""):
-
-    # Create an individual (persona)
-    person = Schema('Person')
-    person.add_property('name', name)
-    contactPoint = Schema('ContactPoint')
-
-    # Update the contact point
-    contactPoint.add_property('telephone', telephone)
-    contactPoint.add_property('email', email)
-
-    # Update the person with it
-    person.add_property('contactPoint', contactPoint)
-    return person
-
+# make_person(name, description, url="", telephone="", email="")
 person = make_person(name="@vsoch",
                      description='research software engineer, dinosaur')
 
@@ -94,14 +81,37 @@ sourceCode.add_property('name', parser.fromHeader)
 
 # sourceCode.properties
 
+# Step 4: Validate Data Structure
+
 recipe.validate(sourceCode)
 
-dataset = make_dataset("SoftwareSourceCode",
-                       attributes=attributes,
-                       relations=relations)
+# Step 5: Add additional fields (extra parsing!)
+#         Since this is a demo, we won't do this here (we don't have URI)
+#         This needs to be the URI produced by the Dockerfile itself, not FROM
 
-# TODO: validate here, the function below should also take the parser and ensure
-# We have Person?Organization
+from schemaorg.utils import run_command
+import json
+
+# Docker Manifest
+response = run_command(['docker', 'inspect', sourceCode.properties['name']])
+if response['return_code'] == 0:
+    manifest = json.loads(response['message'])[0]
+    
+
+# Container Diff
+response = run_command(["container-diff", "analyze", sourceCode.properties['name'],
+                        "--type=pip", "--type=file", "--type=apt", "--type=history",
+                        "--json", '--quiet','--verbosity=panic'])
+if response['return_code'] == 0:
+    layers = json.loads(response['message'])
+    for layer in layers:
+        if layer['AnalyzeType'] == "File":
+
+# Step 5: Generate dataset
+
+dataset = make_dataset(sourceCode)
+
+## TODO: this should be one of the helpers
 
 def make_schema_instance(schema_type="Dataset",
                          context="http://schema.org",
@@ -121,6 +131,7 @@ def make_schema_instance(schema_type="Dataset",
     context="http://schema.org"
     spec = Schema(schema_type, base=context)
 
+    # This should be part of schema function, to extract this
     metadata = {"@context": context,
                 "@type": spec.type}
 
