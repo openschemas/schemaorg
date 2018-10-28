@@ -47,7 +47,7 @@ print(recipe.loaded)
 
 # Step 2: Generate a Person
 
-def make_person(name, url="", telephone="", email=""):
+def make_person(name, description, url="", telephone="", email=""):
 
     # Create an individual (persona)
     person = Schema('Person')
@@ -62,7 +62,8 @@ def make_person(name, url="", telephone="", email=""):
     person.add_property('contactPoint', contactPoint)
     return person
 
-person = make_person(name="@vsoch")
+person = make_person(name="@vsoch",
+                     description='research software engineer, dinosaur')
 
 # Step 3: Create SoftwareSourceCode
 
