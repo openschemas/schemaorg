@@ -22,6 +22,8 @@ import re
 import sys
 
 from schemaorg.main import Schema
+from schemaorg.utils import write_file
+from schemaorg.templates import get_template
 
 # Google Dataset Helpers
 
@@ -40,3 +42,19 @@ def make_person(name, description, url="", telephone="", email=""):
     person.add_property('contactPoint', contactPoint)
     return person
 
+
+def make_dataset(schema,
+                 template="google/dataset.html",
+                 output_file=None):
+
+    '''write a dataset. By default, this means a schema.org "Dataset" and we use
+       the Dataset.html template. You can substitute any of the input parameters
+       to change these variables. If an output file is provided, we write the
+       template to the file. Otherwise, we just return it.
+    '''
+    template = get_template(template)
+    metadata = schema.dump_json()
+    template = template.replace("{{ SCHEMAORG_JSON }}", metadata)
+    if output_file is not None:
+        write_file(template, output_file)
+    return template

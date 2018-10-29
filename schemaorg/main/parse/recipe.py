@@ -147,10 +147,14 @@ class RecipeParser(RecipeBase):
            could be written as "Person|Organization." To unwrap this, we put
            each into its own duplicated field.
         '''
+        finished = dict()
         for name, value in self.loaded['schemas'].items():
+            finished[name] = value
             if "|" in name:
                 for part in name.split('|'):
-                    self.loaded['schemas'][part] = value
+                    finished[part] = value
+                    
+        self.loaded['schemas'] = finished
 
 # Saving
 
@@ -204,6 +208,6 @@ class RecipeParser(RecipeBase):
            required by the recipe.
         '''
         if self.loaded:
-            return validate(schmema, self.loaded)
+            return validate(schema, self)
         bot.error('Recipe has not been loaded. Try recipe.load().')
         return False

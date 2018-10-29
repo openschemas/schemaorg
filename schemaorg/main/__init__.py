@@ -27,6 +27,7 @@ from schemaorg.data import (
     get_versions
 )
 from schemaorg.logger import bot
+import json
 import os
 import re
 import sys
@@ -122,6 +123,24 @@ class Schema(object):
             name: the name of the property, made to lowercase
         '''
         del self.properties[name.lower()] 
+
+
+    def dump_json(self):
+        '''get and them dump the json into a string, for writing into templates
+        '''
+        metadata = self.get_json()
+        return json.dumps(metadata)
+
+
+    def get_json(self):
+        '''Extract the json representation of the Schema,
+           meaning that we recursively unwrap other Schemas, along with
+           including the context and type.
+        '''
+        from schemaorg.templates.metadata import unwrap_properties
+        metadata = unwrap_properties(self.properties)
+        metadata['@context'] = self.base
+        return metadata
 
 # Load
 

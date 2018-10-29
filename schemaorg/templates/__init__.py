@@ -31,6 +31,7 @@ def get_template(name="google/dataset.html"):
        name: the name (subfolder and filename) of the template under templates
 
     '''
-    filename = os.path.join(get_installdir(), 'templates', name)
+    filename = os.path.join(get_installdir(), 'schemaorg', 'templates', name)
     if os.path.exists(filename):
-        return read_file(filename)
+        return read_file(filename, readlines=False)
+    bot.warning('Cannot find %s' % filename)

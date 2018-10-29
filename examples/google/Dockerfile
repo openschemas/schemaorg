@@ -1,17 +1,24 @@
 FROM gliderlabs/alpine:3.4  
+MAINTAINER toasterlint "henry@toasterlint.com  
   
-RUN apk-install \  
-python \  
-supervisor && \  
-python -m ensurepip && \  
-rm -r /usr/lib/python*/ensurepip && \  
-pip install --upgrade pip setuptools && \  
-rm -r /root/.cache  
+RUN apk add \--no-cache nodejs  
   
-RUN mkdir -p /app  
+RUN \  
+apk add \--no-cache g++ gcc git make bash python && \  
+export MAKEFLAGS=-j8 && \  
+npm install -g storjshare-daemon && \  
+npm cache clear \--force && \  
+apk del \--no-cache g++ gcc git make bash python  
   
-COPY requirements.txt lib/marathon_autoscaler/ /app/  
-COPY supervisord.conf /etc/supervisor.d/marathon_autoscaler.ini  
-RUN pip install -r /app/requirements.txt  
-CMD ["/usr/bin/supervisord"]  
+ENV USE_HOSTNAME_SUFFIX=FALSE  
+ENV DATADIR=/storj  
+ENV WALLET_ADDRESS=  
+ENV SHARE_SIZE=1TB  
+ENV RPCADDRESS=0.0.0.0  
+ENV RPCPORT=4000  
+EXPOSE 4000/tcp  
+  
+ADD versions entrypoint /  
+ENTRYPOINT ["/entrypoint"]  
+  
 
