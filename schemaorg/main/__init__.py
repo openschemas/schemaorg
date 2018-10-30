@@ -115,7 +115,6 @@ class Schema(object):
             value: the value to add
         '''
         if value not in ["", None]:
-            name = name.lower()
             if name in self._properties:
                 lookup = self._properties[name]
                 self.properties[name] = value

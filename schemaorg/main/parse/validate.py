@@ -64,7 +64,7 @@ def validate(schema, recipe):
  
             # Otherwise, it's a missing property for the schema!
             else:    
-                bot.error('Missing required property %s' % name)
+                bot.error('Missing required property %s' % prop)
                 return False
 
     return True

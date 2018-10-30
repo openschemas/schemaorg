@@ -1,0 +1,58 @@
+# from schemaorg.main import Schema
+# containerRecipe = Schema("ContainerRecipe.yml")
+# Specification base set to http://www.schema.org
+# Using Version 3.4
+# ContainerRecipe: found 27 properties
+# This is the simple listing of requirements for schemaorg python to 
+# read and for the user to provide to create a complete entry for 
+# a ContainerRecipe (non production child of SoftwareSourceCode)
+
+## A ContainerRecipe
+# Thing > CreativeWork > SoftwareSourceCode > ContainerRecipe
+
+# Attributes not listed are accepted, but not required or recommended. If an
+# attribute is not included officially with a specification release it will
+# be ignored.
+
+# Without a key:pair implies the key is equal to the value, e.g., "license"
+# in schema.org gets mapped to "license" for the Google dataset
+#  - license
+
+# With a key pair implies a mapping, "softwareVersion" for schema.org is mapped
+# to "version" for the Google Dataset
+#  - softwareVersion: version
+
+
+################################################################################
+# Shared Attributes
+################################################################################
+
+version: 1
+schemas:
+  ContainerRecipe:
+    recommended:
+      - keywords
+      - labels
+      - softwareHelp
+      - softwareRequirements
+      - softwareVersion
+      - entrypoint
+    required:
+      - description
+      - name
+      - ContainerImage  # the FROM, for now
+  SoftwareSourceCode:
+    recommended:
+      - softwareVersion: version
+      - citation
+      - identifier
+      - keywords
+      - license
+      - url
+      - sameAs
+      - spatialCoverage
+      - temporalCoverage
+      - variableMeasured
+    required:
+      - description
+      - name

@@ -243,6 +243,18 @@ mapping:
     for the container.
   cardinality: MANY
   controlled_vocab: ''
+  description: A list of environment variables found in the recipe.
+  example: ''
+  expected_types: [Text]
+  marginality: Recommended
+  parent: ContainerRecipe
+  property: environment
+  type: ''
+  type_url: ''
+- bsc_description: Labels are a list of key, value pairs that encompass named metadata
+    for the container.
+  cardinality: MANY
+  controlled_vocab: ''
   description: Labels are a list of key, value pairs that encompass named metadata
     for the container.
   example: ''
@@ -333,7 +345,7 @@ mapping:
   cardinality: MANY
   controlled_vocab: ''
   description: 'Component dependency requirements for application. This includes runtime
-    environments and shared libraries that are not included in the application distribution
+    libraries that are not included in the application distribution
     package, but required to run the application (Examples: DirectX, Java or .NET
     runtime). Supersedes requirements.'
   example: '{   "@type": ["SoftwareApplication", "Tool"],   "softwareRequirements":
