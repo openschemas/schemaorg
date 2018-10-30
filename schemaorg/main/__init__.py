@@ -203,23 +203,28 @@ class Schema(object):
 
 # Properties
 
-    def _load_custom_props(self, field='mapping'):
+    def _load_custom_props(self, key = 'mapping', field="property"):
         '''load custom properties will extract properties into the Schema from
            a list, where some field in the list is the ID to give to the
            self._properties dictionary. This function assumes the openschemas
            draft export, where the main key in the yaml dict is "mapping"
            and the name of the property is "property." We allow for properties
            that are not defined (new with the proposed specification).
+
+           Parameters
+           ==========
+           key: the key in self.loaded (the yaml) with properties
+           field: the field of each property that holds the name (the id)
         '''
         lookup = read_properties_csv(version=self.version)
 
         # Need to parse, under key "mapping" and with uid "property"
-        props = self.loaded['mapping']
+        props = self.loaded[key]
 
         for prop in props:
-            name = "http://schema.org/%s" % prop['property']
+            name = "http://schema.org/%s" % prop[field]
 
-            self._properties[prop['property']] = dict()
+            self._properties[prop[field]] = dict()
   
             # Filter out empty ones
             prop = {k:v for k,v in prop.items() if v}
@@ -228,10 +233,10 @@ class Schema(object):
             if name in lookup:
 
                 # The label is the most human friendly key
-                self._properties[prop['property']] = lookup[name]
+                self._properties[prop[field]] = lookup[name]
 
             # Update with custom
-            self._properties[prop['property']].update(prop)
+            self._properties[prop[field]].update(prop)
 
         bot.info('%s: found %s properties' %(self.type, len(self._properties)))
 
