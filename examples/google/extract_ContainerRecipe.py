@@ -38,8 +38,8 @@ from schemaorg.main.parse import RecipeParser
 from schemaorg.main import Schema
 
 ################################################################################
-## Example 1: Define Dockerfile with SoftwareSourceCode
-## Thing > CreativeWork > SoftwareSourceCode
+## Example 1: Define Dockerfile with ContainerRecipe
+## Thing > CreativeWork > SoftwareSourceCode > ContainerRecipe
 ################################################################################
 
 # Step 1: Read in the (custom) yaml file as a custom (under development) Schema
@@ -51,7 +51,7 @@ containerRecipe = Schema("ContainerRecipe.yml")
 recipe = RecipeParser("recipe_ContainerRecipe.yml")
 print(recipe.loaded)
 
-# Step 2: Extract Container Things! First, the recipe file
+# Step 3: Extract Container Things! First, the recipe file
 
 from spython.main.parse import DockerRecipe
 parser = DockerRecipe("Dockerfile")
@@ -74,13 +74,13 @@ containerRecipe.add_property('ContainerImage', parser.fromHeader)
 recipe.validate(containerRecipe)
 
 # Step 5, get extra metadata we would get with container-diff!
-# Kids don't do this at home :)
+# Kids don't run command line things from Python at home, it's just bad :)
 
 from schemaorg.utils import run_command
 import json
 
-# Docker Manifest (these should more properly be defined with the ContainerImage
-# but I'm not modeling that here, so we can add them to the recipe, why not.
+### BELOW should be defined with ContainerImage, as the attributes are from the
+# ImageManifest I'm not modeling that here, so we can add them to the example
 uri = containerRecipe.properties['name']
 response = run_command(['docker', 'pull', uri])    # Pull
 response = run_command(['docker', 'inspect', uri]) # Inspect
@@ -94,12 +94,14 @@ containerRecipe.add_property('softwareVersion', manifest['Id'])  # shasum
 containerRecipe.add_property('identifier', manifest['RepoTags']) # tag
 
 # Note to readers - we can parse a ContainerRecipe from a manifest!
-# manifest['ContainerConfig']
+# manifest['ContainerConfig'] And it has a name! Hmm.
 
 # Container Diff
 response = run_command(["container-diff", "analyze", uri,
                         "--type=pip", "--type=file", "--type=apt", "--type=history",
                         "--json", '--quiet','--verbosity=panic'])
+
+# note that we can also get pip, apt, packages here...
 if response['return_code'] == 0:
     layers = json.loads(response['message'])
     for layer in layers:
@@ -110,7 +112,7 @@ if response['return_code'] == 0:
 # Here we can go to town parsing the guts to label the container meaningfully
 # TODO: we need some lamma magic / NLP here to extract software tokens
 
-# Step 6. Generate json-ld
+# Step 6. When above is done, generate json-ld
 from schemaorg.templates.google import make_dataset
 dataset = make_dataset(containerRecipe)
 print(dataset)
