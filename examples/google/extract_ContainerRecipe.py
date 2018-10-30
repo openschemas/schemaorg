@@ -14,6 +14,13 @@ local file, ContainerRecipe.yml. It fits into schema.org like this:
 
     Thing > CreativeWork > SoftwareSourceCode > ContainerRecipe
 
+Other suggestions from the OCI Community for fitting names:
+
+    Thing > CreativeWork > SoftwareSourceCode > BuildRecipe
+    Thing > CreativeWork > SoftwareSourceCode > BuildPlan
+    Thing > CreativeWork > SoftwareSourceCode > BuildInstructions
+    Thing > CreativeWork > SoftwareSourceCode > Configuration
+
 If you want to see the "only production schema.org" example, see
 extract_SoftwareSourceCode.py. If you think this categorization is wrong, 
 then please speak up.
