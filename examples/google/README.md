@@ -42,7 +42,8 @@ You can look at any of the example files to get a gist. Generally we:
  - Extract, *validate*, and generate the final dataset
 
 The goal of the software is to provide enough structure to help the user (typically a developer)
-but not so much as to be annoying to use generally.
+but not so much as to be annoying to use generally. The examples below print (flattened)
+with the tool, and are printed pretty for display here.
 
 ## Example 1: SoftwareSourceCode from a Dockerfile
 
@@ -56,7 +57,16 @@ resulting data structure is printed last:
 
 ```html
 <script type="application/ld+json">
-{"creator": {"name": "@vsoch", "@type": "Person"}, "version": "3.4", "description": "A Dockerfile build recipe", "name": "gliderlabs/alpine:3.4", "@context": "http://www.schema.org"}
+{
+   "creator":{
+      "name":"@vsoch",
+      "@type":"Person"
+   },
+   "version":"3.4",
+   "description":"A Dockerfile build recipe",
+   "name":"gliderlabs/alpine:3.4",
+   "@context":"http://www.schema.org"
+}
 </script>
 ```
 
@@ -90,7 +100,34 @@ python extract_ContainerRecipe.py
 ```
 ```html
 <script type="application/ld+json">
-{"labels": [["MAINTAINER", "toasterlint \"henry@toasterlint.com"]], "environment": ["USE_HOSTNAME_SUFFIX=FALSE", "DATADIR=/storj", "WALLET_ADDRESS=", "SHARE_SIZE=1TB", "RPCADDRESS=0.0.0.0", "RPCPORT=4000"], "entrypoint": ["[\"/entrypoint\"]"], "description": "A Dockerfile build recipe", "name": "toasterlint/storjshare-cli", "ContainerImage": "gliderlabs/alpine:3.4", "operatingSystem": "linux", "softwareVersion": "sha256:04ce81ba384870f84ccb5abf8a76a926055f6f781fa82729f810878ec59919fa", "identifier": ["toasterlint/storjshare-cli:latest"], "@context": "http://www.schema.org"}
+{
+   "labels":[
+      [
+         "MAINTAINER",
+         "toasterlint \"henry@toasterlint.com"
+      ]
+   ],
+   "environment":[
+      "USE_HOSTNAME_SUFFIX=FALSE",
+      "DATADIR=/storj",
+      "WALLET_ADDRESS=",
+      "SHARE_SIZE=1TB",
+      "RPCADDRESS=0.0.0.0",
+      "RPCPORT=4000"
+   ],
+   "entrypoint":[
+      "[\"/entrypoint\"]"
+   ],
+   "description":"A Dockerfile build recipe",
+   "name":"toasterlint/storjshare-cli",
+   "ContainerImage":"gliderlabs/alpine:3.4",
+   "operatingSystem":"linux",
+   "softwareVersion":"sha256:04ce81ba384870f84ccb5abf8a76a926055f6f781fa82729f810878ec59919fa",
+   "identifier":[
+      "toasterlint/storjshare-cli:latest"
+   ],
+   "@context":"http://www.schema.org"
+}
 </script>
 ```
 
