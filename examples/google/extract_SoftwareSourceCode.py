@@ -3,21 +3,23 @@
 '''
 This script will demonstrate how we can extract metadata from a Dockerfile,
 and then generate a (html) web template to serve with it so that it is
-able to be indexed by Google Datasets (or ideally, similar with the recipe
-as a ContainerRecipe).
+able to be indexed by Google Datasets, but not as a Dataset, as a SoftwareSourceCode.
+Google search doesn't have an endpoint for SoftwareSourceCode, so we are
+mostly pretending.
 
 Author: @vsoch
 October 21, 2018
 
 This is a "custom" specification (ContainerRecipe) that is represented in the 
-local file, ContainerRecipe.yml. We will review several example parsings
-of this file, including specifications already defined in Schema.org 
-(e.g., as a SoftwareSourceCode) and ones that should be (e.g., ContainerRecipe).
-
-Since the community is slow to review these changes, for the latter I'll be 
-using the local file that is programatically generated.
+local file, ContainerRecipe.yml. 
 
     Thing > CreativeWork > SoftwareSourceCode > ContainerRecipe
+
+But for this first example, we will only use
+specifications that are "official" and defined in schema.org so we stop
+at "SoftwareSourceCode"
+
+    Thing > CreativeWork > SoftwareSourceCode
 
 If you think this is wrong, then put your money where your mouth is
 and help the community to define the right spot. :)
