@@ -16,14 +16,17 @@ local file, ContainerRecipe.yml. It fits into schema.org like this:
 
 Other suggestions from the OCI Community for fitting names:
 
-    Thing > CreativeWork > SoftwareSourceCode > BuildRecipe
-    Thing > CreativeWork > SoftwareSourceCode > BuildPlan
+    Thing > CreativeWork > SoftwareSourceCode > BuildDefinition
     Thing > CreativeWork > SoftwareSourceCode > BuildInstructions
+    Thing > CreativeWork > SoftwareSourceCode > BuildPlan
+    Thing > CreativeWork > SoftwareSourceCode > BuildRecipe
     Thing > CreativeWork > SoftwareSourceCode > Configuration
+    Thing > CreativeWork > SoftwareSourceCode > ImageDefinition
 
 If you want to see the "only production schema.org" example, see
 extract_SoftwareSourceCode.py. If you think this categorization is wrong, 
-then please speak up.
+then please speak up! I'll be updating the list here (and the examples that
+follow) based on the community feedback. Thanks!
 
  - https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/vEupyIGtvJs
  - https://github.com/schemaorg/schemaorg/issues/2059#issuecomment-427208907
