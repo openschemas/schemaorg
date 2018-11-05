@@ -16,5 +16,5 @@ Critical items to know are:
 versions here coincide with releases on pypi.
 
 ## [master](https://github.com/openschemas/schemaorg/tree/master)
- - addition of main modules, and templates (0.0.10)
- - package registration (still under development)
+ - addition of main modules, and templates (0.0.11)
+ - package registration (still under development) (0.0.1)
