@@ -53,7 +53,10 @@ as ContainerRecipe. Since we don't have this entity added to schema.org yet and 
 wait for meetings, I will give this a first shot and just call them "Datasets" and use
 this exercise to develop the codebase here.
 
-**this is the current step I'm working on**
+
+## Examples
+
+ - [openbases/extractor-dockerfile](https://www.github.com/openbases/extractor-dockerfile) is an minimal example showing how to extract metadata for a Dockerfile, for each of a containerRecipe and SoftwareSourceCode.
 
 ## Challenges
 
