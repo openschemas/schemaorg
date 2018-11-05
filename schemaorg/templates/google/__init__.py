@@ -44,8 +44,9 @@ def make_person(name, description, url="", telephone="", email=""):
 
 
 def make_dataset(schema,
-                 template="google/dataset.html",
-                 output_file=None):
+                 output_file=None,
+                 pretty_print=True,
+                 template="google/visual-dataset.html"):
 
     '''write a dataset. By default, this means a schema.org "Dataset" and we use
        the Dataset.html template. You can substitute any of the input parameters
@@ -53,8 +54,8 @@ def make_dataset(schema,
        template to the file. Otherwise, we just return it.
     '''
     template = get_template(template)
-    metadata = schema.dump_json()
+    metadata = schema.dump_json(pretty_print)
     template = template.replace("{{ SCHEMAORG_JSON }}", metadata)
     if output_file is not None:
-        write_file(template, output_file)
+        write_file(output_file, template)
     return template

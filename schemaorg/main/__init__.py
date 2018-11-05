@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from schemaorg.utils import ( 
     get_installdir, 
+    print_json,
     read_csv,
     read_file,
     read_yaml,
@@ -130,10 +131,16 @@ class Schema(object):
         del self.properties[name.lower()] 
 
 
-    def dump_json(self):
+    def dump_json(self, pretty_print=False):
         '''get and them dump the json into a string, for writing into templates
+        
+           Parameters
+           ==========
+           pretty_print: if True, pretty print the json (default is false)
         '''
         metadata = self.get_json()
+        if pretty_print:
+            return print_json(metadata)
         return json.dumps(metadata)
 
 
