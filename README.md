@@ -10,8 +10,6 @@ serves the published specifications, please see [https://www.github.com/schemaor
 This library is not intended to provide advanced functions around querying the ontology,
 but rather accessing the definitions and tagging content with them.
 
-**under development**
-
 ## What is this for?
 
 Please reference the [development](https://openschemas.github.io/schemaorg/) documentation
