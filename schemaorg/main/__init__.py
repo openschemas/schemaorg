@@ -152,6 +152,7 @@ class Schema(object):
         from schemaorg.templates.metadata import unwrap_properties
         metadata = unwrap_properties(self.properties)
         metadata['@context'] = self.base
+        metadata['@type'] = self.type
         return metadata
 
 
