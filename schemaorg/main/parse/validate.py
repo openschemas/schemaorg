@@ -28,6 +28,11 @@ def validate(schema, recipe):
        schema: the loaded schema, of class schemaorg.main.Schema
        loaded: the loaded recipe, rschemaorg.main.parse.RecipeParser.loaded
     '''
+    # Is the yaml formatted correctly?
+    if not "schemas" in recipe.loaded:
+        bot.error('Missing "schemas" as key in recipe file.')
+        return False
+
     # What is the recipe type?
     bot.info('Looking for primary schema %s definition' % schema.type)
     if not schema.type in recipe.loaded['schemas']:
@@ -35,7 +40,11 @@ def validate(schema, recipe):
         return False
 
     # Required properties for main schema
-    bot.info('Looking for required relations for %s' % schema.type)
+    if "required" not in recipe.loaded['schemas'][schema.type]:
+        bot.debug('This recipe has no required attributes.')
+        return True
+
+    bot.debug('Looking for required relations for %s' % schema.type)
     for prop in recipe.loaded['schemas'][schema.type]['required']:
 
         # If it's not a property, it might be a subclass
