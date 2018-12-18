@@ -190,6 +190,37 @@ print(dataset)
 
 For the pretty templates, see the examples folder below.
 
+### 8. Read HTML with json-ld
+
+If you've generated an embedded json-ld, how do you load it again?
+You can actually use the BaseParser of the recipe to do this.
+
+```python
+result = RecipeParser('SoftwareSourceCode.html')
+[schemaorg-recipe][SoftwareSourceCode.html]
+```
+```
+result.loaded
+{'@context': 'http://www.schema.org',
+ '@type': 'SoftwareSourceCode',
+ 'about': 'This is a Dockerfile provided by the Dinosaur Dataset collection.',
+ 'codeRepository': 'https://www.github.com/openschemas/dockerfiles',
+ 'creator': {'@type': 'Person',
+  'contactPoint': {'@type': 'ContactPoint'},
+  'name': '@vsoch'},
+ 'description': 'A Dockerfile build recipe',
+ 'name': 'deforce/alpine-wxpython:latest',
+ 'runtime': 'Docker',
+ 'sameAs': 'ImageDefinition',
+ 'schemas': {},
+ 'thumbnailUrl': 'https://vsoch.github.io/datasets/assets/img/avocado.png',
+ 'version': '3.4'}
+```
+
+If there is interest, we could easily add to the library to look at the type,
+and the version, and load the initial schema with it. Please open an issue if 
+this would be useful to you!
+
 ## Examples
 
  - [openbases/extractor-dockerfile](https://www.github.com/openbases/extractor-dockerfile) is an minimal example showing how to extract metadata for a Dockerfile, for each of a containerRecipe and SoftwareSourceCode.

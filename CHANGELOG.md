@@ -16,6 +16,7 @@ Critical items to know are:
 versions here coincide with releases on pypi.
 
 ## [master](https://github.com/openschemas/schemaorg/tree/master)
+ - added parser for json-ld embedded in html (0.0.15)
  - adding visual catalog template (0.0.14)
  - required/recommended should not be required for a recipe! [issue](https://github.com/openschemas/schemaorg/issues/6) (0.0.13)
  - missing top level of type to close [this issue](https://github.com/openschemas/schemaorg/issues/4) (0.0.12)

@@ -242,6 +242,28 @@ def _read_yaml(section, quiet=False):
                 metadata[k] = v
     return metadata
 
+
+# Markdown and frontmatter
+
+def read_frontmatter(filename, mode='r', quiet=False):
+    '''read a yaml file, only including sections between dashes
+    '''
+    stream = read_file(filename, mode, readlines=False)
+
+    # The yml section always comes after the --- of the frontmatter
+    section = stream.split('---')[1]
+    return _read_yaml(section, quiet=quiet)
+
+
+def read_markdown(filename, mode='r'):
+    '''read the OTHER part of the markdown file (remove the frontend matter)
+    '''
+    stream = read_file(filename, mode, readlines=False)
+
+    # The yml section always comes after the --- of the frontmatter
+    return stream.split('---')[-1]
+
+
 # Json
 
 def write_json(json_obj, filename, mode="w", print_pretty=True):
