@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
 
-__version__ = "0.0.14"
+__version__ = "0.0.15"
 AUTHOR = 'Vanessa Sochat'
 AUTHOR_EMAIL = 'vsochat@stanford.edu'
 NAME = 'schemaorg'
@@ -31,4 +31,5 @@ LICENSE = "LICENSE"
 
 INSTALL_REQUIRES = (
    ('pyaml', {'min_version': '17.12.1'}),
+   ('lxml', {'min_version': '4.1.1' })
 )
