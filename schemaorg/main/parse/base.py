@@ -134,7 +134,7 @@ class RecipeBase(object):
 
             # Read in standard yaml
             else:
-                self.loaded = read_yaml(file_path)
+                self.loaded = read_yaml(file_path, quiet=True)
 
             # If the subclass has a load function, call now
             if hasattr(self, '_load'):
