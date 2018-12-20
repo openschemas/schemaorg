@@ -16,6 +16,7 @@ Critical items to know are:
 versions here coincide with releases on pypi.
 
 ## [master](https://github.com/openschemas/schemaorg/tree/master)
+ - Forgot to add url to the ContactPoint in function to create person! (0.0.19)
  - ensuring that a Google Dataset contact_type is defined, and that empty lists / tuples are not added to Datasets (0.0.18)
  - Schema input should not check if the provided string exists, but is directory [issue](https://github.com/openschemas/schemaorg/issues/14) (0.0.17)
  - RecipeParser needs to honor verbosity level (and be quiet) (0.0.16)

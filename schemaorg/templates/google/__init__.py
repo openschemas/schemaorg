@@ -38,6 +38,7 @@ def make_person(name, description, url="", telephone="", email="",
     # Update the contact point
     contactPoint.add_property('telephone', telephone)
     contactPoint.add_property('email', email)
+    contactPoint.add_property('url', url)
     contactPoint.add_property('contactType', contact_type)
 
     # Update the person with it
