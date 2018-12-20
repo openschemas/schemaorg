@@ -27,7 +27,8 @@ from schemaorg.templates import get_template
 
 # Google Dataset Helpers
 
-def make_person(name, description, url="", telephone="", email=""):
+def make_person(name, description, url="", telephone="", email="", 
+                contact_type="customer support"):
 
     # Create an individual (persona)
     person = Schema('Person')
@@ -37,6 +38,7 @@ def make_person(name, description, url="", telephone="", email=""):
     # Update the contact point
     contactPoint.add_property('telephone', telephone)
     contactPoint.add_property('email', email)
+    contactPoint.add_property('contactType', contact_type)
 
     # Update the person with it
     person.add_property('contactPoint', contactPoint)
