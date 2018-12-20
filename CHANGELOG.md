@@ -16,6 +16,7 @@ Critical items to know are:
 versions here coincide with releases on pypi.
 
 ## [master](https://github.com/openschemas/schemaorg/tree/master)
+ - Schema input should not check if the provided string exists, but is directory [issue](https://github.com/openschemas/schemaorg/issues/6) (0.0.17)
  - RecipeParser needs to honor verbosity level (and be quiet) (0.0.16)
  - added parser for json-ld embedded in html (0.0.15)
  - adding visual catalog template (0.0.14)

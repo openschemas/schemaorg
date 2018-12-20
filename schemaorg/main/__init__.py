@@ -171,7 +171,7 @@ class Schema(object):
         self._properties = dict()
 
         # If we are given a file, it's likely a custom specification
-        if os.path.exists(schema_type):
+        if os.path.isfile(schema_type):
             self._load_custom_type(schema_type)
             self._load_custom_props()
 
