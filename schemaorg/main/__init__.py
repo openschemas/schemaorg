@@ -115,7 +115,7 @@ class Schema(object):
             name: the name of the property, made to lowercase
             value: the value to add
         '''
-        if value not in ["", None]:
+        if value not in ["", None, [], ()]:
             if name in self._properties:
                 lookup = self._properties[name]
                 self.properties[name] = value
