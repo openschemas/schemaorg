@@ -70,29 +70,33 @@ def flatten_schema(metadata, prefix='', flattened=None):
     '''
     from schemaorg.main import Schema
 
-    # In case the user provides the schema directly
     if isinstance(metadata, Schema):
-        prefix = metadata.type
+        prefix = prefix + '.' + metadata.type
         metadata = metadata.properties
-
+   
     # First call into recursion, will be None
     if flattened == None:
         flattened = dict()
 
+    # Flatten the metadata
     for prop, value in metadata.items():
-        prefix = ('%s.%s' %( prefix, prop )).lstrip('.')
+        prefix = ('%s.%s' %(prefix, prop)).lstrip('.')
+
+        # Option 1: Another schema, call recursively
         if isinstance(value, Schema):
-            flattened = flatten_schema(value, prefix + '.' + value.type, flattened)
+            flattened = flatten_schema(value, prefix, flattened)
             flattened[prefix + "@type"] = value.type
+
+        # Option 2: Unwrap a list
         elif isinstance(value, list):
             for i in range(len(value)):
                 item = value[i]
+                prefix = prefix + '.' + str(i)
                 if isinstance(item, Schema):
-                    flattened = flatten_schema(item, prefix + '.' + item.type, flattened)
+                    flattened = flatten_schema(item, prefix, flattened)
                     flattened[prefix + '@type'] = item.type
                 else:
-                    flattened[prefix + '.' + str(i)] = new_item
+                    flattened[prefix] = item
         else:
             flattened[prefix] = metadata[prop]
-        prefix = ''
     return flattened

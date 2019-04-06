@@ -49,7 +49,7 @@ class TestTemplates(unittest.TestCase):
         person = make_person(name="Dinosaur Pancakes", 
                              description='Dataset maintainer',
                              url='https://www.github.com/vsoch',
-                             contact_type='customer suppoert',
+                             contact_type='customer support',
                              telephone = '999-999-9999')
         self.dataset.add_property('creator', person)
         self.dataset.add_property('version', "1.0.0")

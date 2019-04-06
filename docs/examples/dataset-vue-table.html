@@ -13,6 +13,12 @@ body {
   margin:0;
 }
 
+.download {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+}
+
 .searchBox{
    margin:50px 0 0 50px;
    font: 18px/28px 'Noto Sans', serif;
@@ -153,6 +159,7 @@ th span {
   </div>
 </template>
 <img style="position:absolute;top:10px;right:10px" src="https://vsoch.github.io/datasets/assets/img/avocado.png" width=150px>
+<a href='https://vsoch.github.io/datasets/assets/img/avocado.png' target='_blank'><button class='download'>Download</button></a>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.min.js'></script>
 
@@ -208,7 +215,7 @@ Vue.component('datatable',{
 var app = new Vue({
   el: "#wrapper",
   data: {
-    items: [{'name': 'creator.name', 'value': 'Dinosaur Pancakes'}, {'name': 'creator.name.contactPoint.telephone', 'value': '999-999-9999'}, {'name': 'creator.name.contactPoint.telephone.url', 'value': 'https://www.github.com/vsoch'}, {'name': 'creator.name.contactPoint.telephone.url.contactType', 'value': 'customer suppoert'}, {'name': 'creator.name.contactPoint@type', 'value': 'ContactPoint'}, {'name': 'creator@type', 'value': 'Person'}, {'name': 'creator.version', 'value': '1.0.0'}, {'name': 'creator.version.description', 'value': 'This is the best dataset.'}, {'name': 'creator.version.description.name', 'value': 'Dinosaur Dataset'}, {'name': 'creator.version.description.name.thumbnailUrl', 'value': 'https://vsoch.github.io/datasets/assets/img/avocado.png'}, {'name': 'creator.version.description.name.thumbnailUrl.about', 'value': 'This is a dataset'}, {'name': '@context', 'value': 'http://www.schema.org'}, {'name': '@type', 'value': 'Dataset'}]
+    items: [{'name': 'Dataset.creator.Person.name', 'value': 'Dinosaur Pancakes'}, {'name': 'Dataset.creator.Person.name.contactPoint.ContactPoint.telephone', 'value': '999-999-9999'}, {'name': 'Dataset.creator.Person.name.contactPoint.ContactPoint.telephone.url', 'value': 'https://www.github.com/vsoch'}, {'name': 'Dataset.creator.Person.name.contactPoint.ContactPoint.telephone.url.contactType', 'value': 'customer support'}, {'name': 'Dataset.creator.Person.name.contactPoint@type', 'value': 'ContactPoint'}, {'name': 'Dataset.creator@type', 'value': 'Person'}, {'name': 'Dataset.creator.version', 'value': '1.0.0'}, {'name': 'Dataset.creator.version.description', 'value': 'This is the best dataset.'}, {'name': 'Dataset.creator.version.description.name', 'value': 'Dinosaur Dataset'}, {'name': 'Dataset.creator.version.description.name.thumbnailUrl', 'value': 'https://vsoch.github.io/datasets/assets/img/avocado.png'}, {'name': 'Dataset.creator.version.description.name.thumbnailUrl.about', 'value': 'This is a dataset'}, {'name': 'Dataset.creator.version.description.name.thumbnailUrl.about.distribution.0.DataDownload.contentUrl', 'value': 'https://vsoch.github.io/datasets/assets/img/avocado.png'}, {'name': 'Dataset.creator.version.description.name.thumbnailUrl.about.distribution.0.DataDownload.contentUrl.encodingFormat', 'value': 'CSV'}, {'name': 'Dataset.creator.version.description.name.thumbnailUrl.about.distribution.0@type', 'value': 'DataDownload'}, {'name': '@context', 'value': 'http://www.schema.org'}, {'name': '@type', 'value': 'Dataset'}]
           //{ name: 'One', value: '98' },
           //{ name: 'Two', value: '38' },
           //{ name: 'Three', value: '34' },
@@ -230,7 +237,7 @@ var app = new Vue({
         "contactPoint": {
             "telephone": "999-999-9999",
             "url": "https://www.github.com/vsoch",
-            "contactType": "customer suppoert",
+            "contactType": "customer support",
             "@type": "ContactPoint"
         },
         "@type": "Person"
@@ -240,6 +247,13 @@ var app = new Vue({
     "name": "Dinosaur Dataset",
     "thumbnailUrl": "https://vsoch.github.io/datasets/assets/img/avocado.png",
     "about": "This is a dataset",
+    "distribution": [
+        {
+            "contentUrl": "https://vsoch.github.io/datasets/assets/img/avocado.png",
+            "encodingFormat": "CSV",
+            "@type": "DataDownload"
+        }
+    ],
     "@context": "http://www.schema.org",
     "@type": "Dataset"
 }
