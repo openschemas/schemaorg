@@ -13,7 +13,7 @@ workflows:
             branches:
               ignore: master
 
-setup: &setup
+install: &install
   name: install dependencies
   command: |
       apt-get update && apt-get install -y wget git
@@ -64,11 +64,11 @@ jobs:
       - image: debian:stretch
     working_directory: ~/repo
     steps:
-      - *setup
       - checkout
       - restore_cache:
           keys:
           - v1-dependencies
+      - run: *install
       - run: *install_python_3
       - run: *install_schemaorg
       - save_cache:
@@ -85,11 +85,11 @@ jobs:
       - image: debian:stretch
     working_directory: ~/repo
     steps:
-      - *setup
       - checkout
       - restore_cache:
           keys:
           - v1-dependencies
+      - run: *install
       - run: *install_python_2
       - run: *install_schemaorg
       - save_cache:
