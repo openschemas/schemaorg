@@ -13,6 +13,10 @@ workflows:
             branches:
               ignore: master
 
+setup: &setup
+  name: install dependencies
+  command: |
+      apt-get update && apt-get install -y wget git
 
 install_schemaorg: &install_schemaorg
   name: install schemaorg
@@ -60,6 +64,7 @@ jobs:
       - image: debian:stretch
     working_directory: ~/repo
     steps:
+      - *setup
       - checkout
       - restore_cache:
           keys:
@@ -80,6 +85,7 @@ jobs:
       - image: debian:stretch
     working_directory: ~/repo
     steps:
+      - *setup
       - checkout
       - restore_cache:
           keys:
