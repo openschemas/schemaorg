@@ -85,7 +85,6 @@ def flatten_schema(metadata, prefix='', flattened=None):
         prefix = ('%s.%s' %( prefix, prop )).lstrip('.')
         if isinstance(value, Schema):
             flattened = flatten_schema(value.properties, prefix, flattened)
-            print(flattened)
             flattened[prefix + "@type"] = value.type
         else:
             flattened[prefix] = metadata[prop]

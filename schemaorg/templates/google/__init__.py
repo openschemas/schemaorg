@@ -72,12 +72,8 @@ def make_vue_table(schema, template, pretty_print, title=None, output_file=None)
         metadata.append({"name": key, "value": value})
     template = template.replace("{{ SCHEMAORG_ITEMS }}", str(metadata))
 
-    # If there is a thumbnail, replace it.
-    if "thumbnailUrl" in schema.properties:
-        thumbnail = schema.properties.get('thumbnailUrl', '')
-        if thumbnail != '':
-            thumbnail = '<img style="position:absolute;top:10px;right:10px" src="%s" width=150px>' % thumbnail
-        template = template.replace("{{ SCHEMAORG_THUMBNAIL }}", thumbnail)        
+    thumbnail = get_thumbnail_url(schema)
+    template = template.replace("{{ SCHEMAORG_THUMBNAIL }}", thumbnail)        
 
     metadata = schema.dump_json(pretty_print)
     template = template.replace("{{ SCHEMAORG_JSON }}", metadata)
@@ -87,6 +83,17 @@ def make_vue_table(schema, template, pretty_print, title=None, output_file=None)
         write_file(output_file, template)
 
     return template    
+
+
+def get_thumbnail_url(schema):
+    thumbnail = ''
+
+    # If there is a thumbnail, replace it.
+    if "thumbnailUrl" in schema.properties:
+        thumbnail = schema.properties.get('thumbnailUrl', '')
+        if thumbnail != '':
+            thumbnail = '<img style="position:absolute;top:10px;right:10px" src="%s" width=150px>' % thumbnail
+    return thumbnail
 
 
 def make_bootstrap_table(schema, template, pretty_print, output_file=None):
@@ -106,12 +113,8 @@ def make_bootstrap_table(schema, template, pretty_print, output_file=None):
         rows.append('<tr><td>%s</td><td>%s</td></tr>' %(key, value))   
     template = template.replace("{{ SCHEMAORG_ROWS }}", '\n'.join(rows))
 
-    # If there is a thumbnail, replace it.
-    if "thumbnailUrl" in schema.properties:
-        thumbnail = schema.properties.get('thumbnailUrl', '')
-        if thumbnail != '':
-            thumbnail = '<img src="%s" width=200px>'
-        template = template.replace("{{ SCHEMAORG_THUMBNAIL }}", thumbnail)        
+    thumbnail = get_thumbnail_url(schema)
+    template = template.replace("{{ SCHEMAORG_THUMBNAIL }}", thumbnail)        
 
     metadata = schema.dump_json(pretty_print)
     template = template.replace("{{ SCHEMAORG_JSON }}", metadata)
@@ -143,7 +146,7 @@ def make_dataset(schema,
 
     # Option 3, google/dataset-table.html (bootstrap)
     elif template == 'google/dataset-table.html':
-        template = make_vue_table(schema, template, pretty_print)
+        template = make_bootstrap_table(schema, template, pretty_print)
 
     # Option 4: default 
     elif template == 'google/dataset.html':

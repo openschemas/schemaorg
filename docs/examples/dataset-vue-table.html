@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dinosaur Dataset</title>
+<style>
+@import 'https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&subset=latin-ext';
+
+body {
+  font: 18px/28px 'Noto Sans', serif;
+  padding:0;
+  margin:0;
+}
+
+.searchBox{
+   margin:50px 0 0 50px;
+   font: 18px/28px 'Noto Sans', serif;
+   padding: 5px 15px 5px 15px;
+   width:382px;
+   display:block;
+}
+
+table {
+  margin:50px 0 0 50px;
+  border-collapse: separate;
+  border-spacing: 0px
+}
+
+td:first-child, th:first-child {
+  margin-left:50px;
+}
+
+td, th{
+  padding:10px 100px 10px 0px;
+  border-bottom:1px solid #000;
+  min-width:200px;
+  text-align:left;
+}
+
+td:before {
+  content: attr(data-th);
+  font-weight:bold;
+  display: none;
+}
+th {
+  position:relative;
+  cursor:pointer;
+}
+th span {
+  float:left;
+}
+
+.arrow_box {
+  width:10px;
+  height:10px;
+  position:absolute;
+  display:inline;
+  top:25px;
+  padding-left:25px;
+}
+
+.arrow_box:after, .arrow_box:before {
+	border: solid transparent;
+	content: " ";
+	position: absolute;
+}
+
+.arrow_box:before {
+    border-top-color: #000;
+    opacity: 0.2;
+	  border-width: 5px;
+}
+
+.arrow_box:after {
+  	border-bottom-color: #000;  
+    opacity: 0.2;
+	  border-width: 5px;
+    position:absolute;
+    top:-12px;
+}
+
+.descending  .arrow_box:before {
+    opacity: 1;
+}
+
+.descending .arrow_box:after {
+    opacity: 0;
+}
+
+.ascending  .arrow_box:before {
+    opacity: 0;
+}
+
+.ascending .arrow_box:after {
+    opacity: 1;
+}
+
+  
+@media (max-width: 480px) {
+  td {
+    display: block;
+  }
+  th {
+    display:none;
+  }
+  td:first-child, th:first-child {
+    margin-left:0px;
+  }
+  th {
+    text-align:left;
+  }
+  td:before {
+    display: inline-block;
+    width:160px;
+  }
+  .row td:last-child {
+    margin-bottom:50px;
+  }
+  .searchBox {
+    display:none;
+  }
+  td, th{
+    min-width:0px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+  <div id="wrapper">
+    <datatable :items="items"></datatable> 
+</div>
+<template id="datatable">
+  <div>
+    <input v-model="searchKey" class="searchBox" placeholder="Search...">
+    <table>
+        <tr>
+          <th @click="columnSort('name',toggleSortOrder, 'head-name')" id="head-name">
+              <span>Name</span>
+              <div class="arrow_box"></div></th>
+          <th @click="columnSort('value',toggleSortOrder, 'head-value')" id="head-value">
+              <span>Value</span>
+              <div class="arrow_box"></div></th>
+        </tr>
+        <tr v-for="item in orderedList" class="row">
+          <td data-th="Name">{{item.name}}</td>
+          <td data-th="Value">{{item.value}}</td>
+        </tr> 
+    </table>
+  </div>
+</template>
+<img style="position:absolute;top:10px;right:10px" src="https://vsoch.github.io/datasets/assets/img/avocado.png" width=150px>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.min.js'></script>
+
+<script>
+Vue.component('datatable',{
+  template:"#datatable",
+  props: ['items'],
+  data: function() {
+    return {
+      searchKey: '',
+      sortBy: 'name',
+      sortOrder: 'asc'
+    }
+  },
+  computed: {    
+    orderedList() {
+      var list = this.items.filter(
+           function(item){
+              var filtlist = item.name.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1 ||
+              item.value.toLowerCase().indexOf(this.searchKey.toLowerCase()) > -1;      
+              return filtlist;
+          }.bind(this)); 
+          return _.orderBy(list, this.sortBy, this.sortOrder);
+    },
+    toggleSortOrder: function(){
+      if (this.sortOrder == 'asc') {
+         return 'desc'
+      }
+      return 'asc'
+    }
+  },
+  methods: {
+    columnSort:function(sortBy, sortOrder, item) {
+        var elem = document.getElementById(item);
+      
+        this.sortBy = sortBy;
+        this.sortOrder = sortOrder;
+        
+        var elems = document.querySelectorAll("th");
+        [].forEach.call(elems, function(el) {
+            el.classList.remove("descending");
+            el.classList.remove("ascending");
+        }); 
+        if (this.sortOrder == 'desc') {
+           elem.className = 'descending';
+        } else {
+           elem.className = 'ascending';
+        }
+    }
+   },
+})
+
+var app = new Vue({
+  el: "#wrapper",
+  data: {
+    items: [{'name': 'creator.name', 'value': 'Dinosaur Pancakes'}, {'name': 'creator.name.contactPoint.telephone', 'value': '999-999-9999'}, {'name': 'creator.name.contactPoint.telephone.url', 'value': 'https://www.github.com/vsoch'}, {'name': 'creator.name.contactPoint.telephone.url.contactType', 'value': 'customer suppoert'}, {'name': 'creator.name.contactPoint@type', 'value': 'ContactPoint'}, {'name': 'creator@type', 'value': 'Person'}, {'name': 'creator.version', 'value': '1.0.0'}, {'name': 'creator.version.description', 'value': 'This is the best dataset.'}, {'name': 'creator.version.description.name', 'value': 'Dinosaur Dataset'}, {'name': 'creator.version.description.name.thumbnailUrl', 'value': 'https://vsoch.github.io/datasets/assets/img/avocado.png'}, {'name': 'creator.version.description.name.thumbnailUrl.about', 'value': 'This is a dataset'}, {'name': '@context', 'value': 'http://www.schema.org'}, {'name': '@type', 'value': 'Dataset'}]
+          //{ name: 'One', value: '98' },
+          //{ name: 'Two', value: '38' },
+          //{ name: 'Three', value: '34' },
+          //{ name: 'Four', value: '36' },
+          //{ name: 'Five', value: '28' },
+          //{ name: 'Six', value: '26' },
+          //{ name: 'Seven', value: '51' },
+          //{ name: 'Eight', value: '58' },
+          //{ name: 'Nine', value: '34' },
+          //{ name: 'Ten', value: '20' } 
+    }
+});
+</script>
+
+<script type="application/ld+json">
+{
+    "creator": {
+        "name": "Dinosaur Pancakes",
+        "contactPoint": {
+            "telephone": "999-999-9999",
+            "url": "https://www.github.com/vsoch",
+            "contactType": "customer suppoert",
+            "@type": "ContactPoint"
+        },
+        "@type": "Person"
+    },
+    "version": "1.0.0",
+    "description": "This is the best dataset.",
+    "name": "Dinosaur Dataset",
+    "thumbnailUrl": "https://vsoch.github.io/datasets/assets/img/avocado.png",
+    "about": "This is a dataset",
+    "@context": "http://www.schema.org",
+    "@type": "Dataset"
+}
+</script>
+
+</body>
+
+</html>
