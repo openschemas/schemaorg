@@ -109,7 +109,7 @@ def make_bootstrap_table(schema, template, pretty_print, output_file=None):
 
     # Rows of the table
     rows = []
-    for key, value in schema.properties.items():
+    for key, value in schema.get_flattened().items():
         rows.append('<tr><td>%s</td><td>%s</td></tr>' %(key, value))   
     template = template.replace("{{ SCHEMAORG_ROWS }}", '\n'.join(rows))
 

@@ -193,7 +193,7 @@ the output. You have choice of the following templates:
 
  - [google/dataset-table.html](https://openschemas.github.io/schemaorg/examples/dataset-table.html)  (bootstrap table)
  - [google/visual-dataset.html](https://openschemas.github.io/schemaorg/examples/visual-dataset.html) this is the default
- - [google/dataset.html](https://openschemas.github.io/schemaorg/examples/dataset-table.html) view source on this one to see json metadata
+ - [google/dataset.html](https://openschemas.github.io/schemaorg/examples/dataset.html) view source on this one to see json metadata
  - [google/dataset-vue-table.html](https://openschemas.github.io/schemaorg/examples/dataset-vue-table.html)
 
 For example:
