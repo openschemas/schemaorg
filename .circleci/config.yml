@@ -53,7 +53,8 @@ install_python_2: &install_python_2
 test_schemaorg: &test_schemaorg
   name: Test Schemaorg Python
   command: |
-        cd ~/repo/schemaorg
+        cd ~/repo/schemaorg/schemaorg
+        ls
         $HOME/conda/bin/python -m unittest tests.test_templates
         $HOME/conda/bin/python -m unittest tests.test_schema
 
