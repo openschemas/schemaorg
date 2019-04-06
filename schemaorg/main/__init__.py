@@ -161,7 +161,7 @@ class Schema(object):
            including the context and type into a single level dictionary
         '''
         from schemaorg.templates.metadata import flatten_schema
-        metadata = flatten_schema(self.properties)
+        metadata = flatten_schema(self)
         metadata['@context'] = self.base
         metadata['@type'] = self.type
         return metadata

@@ -73,9 +73,11 @@ def make_vue_table(schema, template, pretty_print, title=None, output_file=None)
     template = template.replace("{{ SCHEMAORG_ITEMS }}", str(metadata))
 
     thumbnail = get_thumbnail_url(schema)
-    template = template.replace("{{ SCHEMAORG_THUMBNAIL }}", thumbnail)        
-
     metadata = schema.dump_json(pretty_print)
+    download_link = get_download_link(schema)
+
+    template = template.replace("{{ SCHEMAORG_DOWNLOAD_LINK }}", download_link)
+    template = template.replace("{{ SCHEMAORG_THUMBNAIL }}", thumbnail)        
     template = template.replace("{{ SCHEMAORG_JSON }}", metadata)
 
     # Write to file, if an output file provided
@@ -96,6 +98,25 @@ def get_thumbnail_url(schema):
     return thumbnail
 
 
+def get_download_link(schema):
+    '''get the download link, if DataDownload is defined, and it has a
+       associated url
+    '''
+    download_link = ''
+    data_download = schema.properties.get('distribution')
+    if data_download != None:
+
+        contender = None
+        for contender in data_download:
+            if contender.type == "DataDownload":
+                break
+        if contender != None:
+            download_link = contender.properties.get('contentUrl', '')
+            if download_link != '':
+                download_link = "<a href='%s' target='_blank'><button class='download'>Download</button></a>" % download_link
+    return download_link
+
+
 def make_bootstrap_table(schema, template, pretty_print, output_file=None):
     '''google/dataset-table.html
     '''
@@ -111,13 +132,15 @@ def make_bootstrap_table(schema, template, pretty_print, output_file=None):
     rows = []
     for key, value in schema.get_flattened().items():
         rows.append('<tr><td>%s</td><td>%s</td></tr>' %(key, value))   
-    template = template.replace("{{ SCHEMAORG_ROWS }}", '\n'.join(rows))
 
     thumbnail = get_thumbnail_url(schema)
-    template = template.replace("{{ SCHEMAORG_THUMBNAIL }}", thumbnail)        
-
+    download_link = get_download_link(schema)
     metadata = schema.dump_json(pretty_print)
+
+    template = template.replace("{{ SCHEMAORG_DOWNLOAD_LINK }}", download_link)        
+    template = template.replace("{{ SCHEMAORG_THUMBNAIL }}", thumbnail)        
     template = template.replace("{{ SCHEMAORG_JSON }}", metadata)
+    template = template.replace("{{ SCHEMAORG_ROWS }}", '\n'.join(rows))
 
     # Write to file, if an output file provided
     if output_file is not None:

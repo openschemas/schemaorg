@@ -13,6 +13,12 @@ body {
   margin:0;
 }
 
+.download {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+}
+
 .searchBox{
    margin:50px 0 0 50px;
    font: 18px/28px 'Noto Sans', serif;
@@ -153,6 +159,7 @@ th span {
   </div>
 </template>
 {{ SCHEMAORG_THUMBNAIL }}
+{{ SCHEMAORG_DOWNLOAD_LINK }}
 <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.min.js'></script>
 
