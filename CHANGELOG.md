@@ -16,6 +16,7 @@ Critical items to know are:
 versions here coincide with releases on pypi.
 
 ## [master](https://github.com/openschemas/schemaorg/tree/master)
+ - Added download link to pages (0.0.21)
  - Added additional templates for rendering into tables (0.0.20)
  - Forgot to add url to the ContactPoint in function to create person! (0.0.19)
  - ensuring that a Google Dataset contact_type is defined, and that empty lists / tuples are not added to Datasets (0.0.18)
