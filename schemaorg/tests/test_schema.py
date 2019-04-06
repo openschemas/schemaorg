@@ -21,6 +21,7 @@ from schemaorg.main import Schema
 import shutil
 import os
 import unittest
+import tempfile
 
 print("######################################################## test_schema")
 
