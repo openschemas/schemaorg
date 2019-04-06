@@ -191,10 +191,10 @@ You'll see an html page returned along with written to index.html.
 By setting the `template` variable in the `make_dataset` function, you can control
 the output. You have choice of the following templates:
 
- - google/dataset-table.html  (bootstrap table)
- - [google/visual-dataset.html](https://vsoch.github.io/zenodo-ml) this is the default
- - google/dataset.html        (just blank page, json metadata)
- - google/dataset-vue-table.html
+ - [google/dataset-table.html](https://openschemas.github.io/schemaorg/examples/dataset-table.html)  (bootstrap table)
+ - [google/visual-dataset.html](https://openschemas.github.io/schemaorg/examples/visual-dataset.html) this is the default
+ - [google/dataset.html](https://openschemas.github.io/schemaorg/examples/dataset-table.html) view source on this one to see json metadata
+ - [google/dataset-vue-table.html](https://openschemas.github.io/schemaorg/examples/dataset-vue-table.html)
 
 For example:
 
