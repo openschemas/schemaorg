@@ -2,7 +2,7 @@
 
 A class to represent a specification schema
 
-Copyright (C) 2018 Vanessa Sochat.
+Copyright (C) 2018-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -151,6 +151,17 @@ class Schema(object):
         '''
         from schemaorg.templates.metadata import unwrap_properties
         metadata = unwrap_properties(self.properties)
+        metadata['@context'] = self.base
+        metadata['@type'] = self.type
+        return metadata
+
+    def get_flattened(self):
+        '''Extract a flat representation of the Schema,
+           meaning that we recursively unwrap other Schemas, along with
+           including the context and type into a single level dictionary
+        '''
+        from schemaorg.templates.metadata import flatten_schema
+        metadata = flatten_schema(self.properties)
         metadata['@context'] = self.base
         metadata['@type'] = self.type
         return metadata

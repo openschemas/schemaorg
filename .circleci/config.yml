@@ -1,0 +1,102 @@
+version: 2.1
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-schemaorg-python-3:
+          filters:
+            branches:
+              ignore: master
+      - test-schemaorg-python-2:
+          filters:
+            branches:
+              ignore: master
+
+install: &install
+  name: install dependencies
+  command: |
+      apt-get update && apt-get install -y wget git bzip2
+
+install_schemaorg: &install_schemaorg
+  name: install schemaorg
+  command: |
+     $HOME/conda/bin/pip uninstall schemaorg --yes || echo "Not installed"
+     $HOME/conda/bin/python setup.py install
+
+install_python_3: &install_python_3
+  name: install Python 3.5 dependencies
+  command: | 
+      ls $HOME
+      if [ ! -d "/home/circleci/conda" ]; then
+          wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+          /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/conda
+          export PATH=$HOME/conda/bin:$PATH
+          $HOME/conda/bin/python setup.py install
+       else
+           echo "Miniconda 3 is already installed, continuing to build."
+       fi
+
+install_python_2: &install_python_2
+  name: install Python 3.5 dependencies
+  command: | 
+      ls $HOME
+      if [ ! -d "/home/circleci/conda" ]; then
+          wget https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.sh
+          /bin/bash Miniconda2-latest-Linux-x86_64.sh -b -p $HOME/conda
+          export PATH=$HOME/conda/bin:$PATH
+          $HOME/conda/bin/python setup.py install
+       else
+           echo "Miniconda 2 is already installed, continuing to build."
+       fi
+
+test_schemaorg: &test_schemaorg
+  name: Test Schemaorg Python
+  command: |
+        cd ~/repo/schemaorg/tests
+        $HOME/conda/bin/python -m unittest test_templates
+        $HOME/conda/bin/python -m unittest test_schema
+
+
+jobs:
+  test-schemaorg-python-3:
+    docker:
+      - image: debian:stretch
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies
+      - run: *install
+      - run: *install_python_3
+      - run: *install_schemaorg
+      - save_cache:
+          paths:
+            - /home/circleci/conda
+          key: v1-dependencies        
+      - run: *test_schemaorg
+      - store_artifacts:
+          path: /tmp/schemaorg-test
+          destination: schemaorg-templates-3
+
+  test-schemaorg-python-2:
+    docker:
+      - image: debian:stretch
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies
+      - run: *install
+      - run: *install_python_2
+      - run: *install_schemaorg
+      - save_cache:
+          paths:
+            - /home/circleci/conda
+          key: v1-dependencies        
+      - run: *test_schemaorg
+      - store_artifacts:
+          path: /tmp/schemaorg-test
+          destination: schemaorg-templates-3

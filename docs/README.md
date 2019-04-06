@@ -152,7 +152,6 @@ parser = DockerRecipe("Dockerfile")
 Now here is how I add a property. Let's add the obvious ones from the Dockerfile.
 
 ```python
-spec.add_property('version', containerRecipe.version)
 spec.add_property('environment', parser.environ) # currently a list
 spec.add_property('entrypoint', parser.entrypoint)
 spec.add_property('description', 'A Dockerfile build recipe')
@@ -186,6 +185,21 @@ use one of the templates provided here.
 from schemaorg.templates.google import make_dataset
 dataset = make_dataset(spec, "index.html")
 print(dataset)
+```
+
+You'll see an html page returned along with written to index.html.
+By setting the `template` variable in the `make_dataset` function, you can control
+the output. You have choice of the following templates:
+
+ - google/dataset-table.html  (bootstrap table)
+ - [google/visual-dataset.html](https://vsoch.github.io/zenodo-ml) this is the default
+ - google/dataset.html        (just blank page, json metadata)
+ - google/dataset-vue-table.html
+
+For example:
+
+```python
+dataset = make_dataset(spec, "vue-table.html", template="google/dataset-vue-table.html")
 ```
 
 For the pretty templates, see the examples folder below.
@@ -224,4 +238,4 @@ this would be useful to you!
 ## Examples
 
  - [openbases/extractor-dockerfile](https://www.github.com/openbases/extractor-dockerfile) is an minimal example showing how to extract metadata for a Dockerfile, for each of a containerRecipe and SoftwareSourceCode.
-
+ - [Zenodo-ml](https://vsoch.github.io/zenodo-ml/) is an example of using the default template (google/visual-dataset.html) to render metadata about a dataset.

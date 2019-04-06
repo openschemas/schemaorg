@@ -1,0 +1,46 @@
+# Specification base using to http://www.schema.org
+# Using Version 3.4
+# Found http://www.schema.org/Dataset
+# This is the simple listing of requirements for schemaorg python to 
+# read and for the user to provide to create a complete entry for 
+# a container recipe as a Dataset. No, a container is not a Dataset,
+# but this is important to show how we can index these with Google Search!
+# To properly do this, the search should be able to index ImageDefinition.
+
+## A Dataset
+# Thing > Dataset
+
+# Attributes not listed are accepted, but not required or recommended. If an
+# attribute is not included officially with a specification release it will
+# be ignored.
+
+# Without a key:pair implies the key is equal to the value, e.g., "license"
+# in schema.org gets mapped to "license" for the Google dataset
+#  - license
+
+################################################################################
+# Shared Attributes
+################################################################################
+
+version: 1
+schemas:
+  Dataset:
+    recommended:
+      - softwareVersion: version
+      - citation
+      - identifier
+      - keywords
+      - license
+      - url
+      - sameAs
+      - spatialCoverage
+      - temporalCoverage
+      - variableMeasured
+      - includedInDataCatalog
+    required:
+      - description
+      - name
+  Person|Organization:
+    required:
+      - description
+      - name
