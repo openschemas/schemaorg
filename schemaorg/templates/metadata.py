@@ -72,6 +72,7 @@ def flatten_schema(metadata, prefix='', flattened=None):
 
     if isinstance(metadata, Schema):
         prefix = prefix + '.' + metadata.type
+        original = prefix
         metadata = metadata.properties
    
     # First call into recursion, will be None
@@ -99,4 +100,5 @@ def flatten_schema(metadata, prefix='', flattened=None):
                     flattened[prefix] = item
         else:
             flattened[prefix] = metadata[prop]
+        prefix = original
     return flattened
