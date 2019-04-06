@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2018 Vanessa Sochat.
+Copyright (C) 2018-2019 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -46,9 +46,80 @@ def make_person(name, description, url="", telephone="", email="",
     return person
 
 def make_template_base(schema, template, pretty_print):
+    '''make template base is the simplest function to export (and replace)
+       only SCHEMAORG_JSON template tags.
+    '''
     template = get_template(template)
     metadata = schema.dump_json(pretty_print)
     template = template.replace("{{ SCHEMAORG_JSON }}", metadata)
+    return template    
+
+
+def make_vue_table(schema, template, pretty_print, title=None, output_file=None):
+    '''google/dataset-vue-table.html
+       SCHEMAORG_ITEMS needs to be a list of key value pairs
+       with properties, e.g., { name: 'One', value: '98' }
+    '''
+    template = get_template(template)
+
+    # Set the title
+    title = schema.properties.get('name', 'Google Dataset')
+    template = template.replace("{{ SCHEMAORG_TITLE }}", title)
+
+    # Metadata (properties) are rendered into table
+    metadata = []
+    for key, value in schema.get_flattened().items():
+        metadata.append({"name": key, "value": value})
+    template = template.replace("{{ SCHEMAORG_ITEMS }}", str(metadata))
+
+    # If there is a thumbnail, replace it.
+    if "thumbnailUrl" in schema.properties:
+        thumbnail = schema.properties.get('thumbnailUrl', '')
+        if thumbnail != '':
+            thumbnail = '<img style="position:absolute;top:10px;right:10px" src="%s" width=150px>' % thumbnail
+        template = template.replace("{{ SCHEMAORG_THUMBNAIL }}", thumbnail)        
+
+    metadata = schema.dump_json(pretty_print)
+    template = template.replace("{{ SCHEMAORG_JSON }}", metadata)
+
+    # Write to file, if an output file provided
+    if output_file is not None:
+        write_file(output_file, template)
+
+    return template    
+
+
+def make_bootstrap_table(schema, template, pretty_print, output_file=None):
+    '''google/dataset-table.html
+    '''
+    template = get_template(template)
+
+    # Set the title
+    title = schema.properties.get('name', 'Google Dataset')
+    description = schema.properties.get('description', 'This is a Google Dataset.')
+    template = template.replace("{{ SCHEMAORG_TITLE }}", title)
+    template = template.replace("{{ SCHEMAORG_DESCRIPTION }}", description)
+
+    # Rows of the table
+    rows = []
+    for key, value in schema.properties.items():
+        rows.append('<tr><td>%s</td><td>%s</td></tr>' %(key, value))   
+    template = template.replace("{{ SCHEMAORG_ROWS }}", '\n'.join(rows))
+
+    # If there is a thumbnail, replace it.
+    if "thumbnailUrl" in schema.properties:
+        thumbnail = schema.properties.get('thumbnailUrl', '')
+        if thumbnail != '':
+            thumbnail = '<img src="%s" width=200px>'
+        template = template.replace("{{ SCHEMAORG_THUMBNAIL }}", thumbnail)        
+
+    metadata = schema.dump_json(pretty_print)
+    template = template.replace("{{ SCHEMAORG_JSON }}", metadata)
+
+    # Write to file, if an output file provided
+    if output_file is not None:
+        write_file(output_file, template)
+
     return template    
 
 
@@ -62,14 +133,29 @@ def make_dataset(schema,
        to change these variables. If an output file is provided, we write the
        template to the file. Otherwise, we just return it.
     '''
-    template = make_template_base(schema, template, pretty_print)
+    # Option 1, a visual of the json on the page
+    if template == "google/visual-dataset.html":
+        template = make_template_base(schema, template, pretty_print)
+
+    # Option 2, google/dataset-vue-table.html
+    elif template == 'google/dataset-vue-table.html':
+        template = make_vue_table(schema, template, pretty_print)
+
+    # Option 3, google/dataset-table.html (bootstrap)
+    elif template == 'google/dataset-table.html':
+        template = make_vue_table(schema, template, pretty_print)
+
+    # Option 4: default 
+    elif template == 'google/dataset.html':
+        template = make_template_base(schema, template, pretty_print)
+
     if output_file is not None:
         write_file(output_file, template)
     return template
 
 
 def make_table(schema,
-               rows,                 
+               rows=None,                 
                output_file=None,
                pretty_print=True,
                title=None,
@@ -77,8 +163,15 @@ def make_table(schema,
 
     '''write a data catalog, meaning rows of data. You should include, as rows,
        a list of rows as you want them (e.g., each with <tr><td>...</tr></td>.
+       If no rows are provided, the schema is export into rows.
        If an output file is provided, we write to file.
     '''
+    # If the user doesn't provide rows, create them
+    if rows == None:
+        rows = []
+        for key, value in schema.properties.items():
+            rows.append('<tr><td>%s</td><td>%s</td></tr>' %(key, value))
+
     template = make_template_base(schema, template, pretty_print)
     template = template.replace("{{ SCHEMAORG_TITLE }}", title or "Schema.org Data Catalog")
     template = template.replace('{{ SCHEMAORG_TABLE }}', '\n'.join(rows))

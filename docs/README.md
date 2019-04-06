@@ -224,4 +224,4 @@ this would be useful to you!
 ## Examples
 
  - [openbases/extractor-dockerfile](https://www.github.com/openbases/extractor-dockerfile) is an minimal example showing how to extract metadata for a Dockerfile, for each of a containerRecipe and SoftwareSourceCode.
-
+ - [Zenodo-ml](https://vsoch.github.io/zenodo-ml/) is an example of using the default template (google/dataset-visual.html) to render metadata about a dataset.
