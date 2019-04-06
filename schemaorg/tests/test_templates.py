@@ -52,12 +52,15 @@ class TestTemplates(unittest.TestCase):
                              contact_type='customer suppoert',
                              telephone = '999-999-9999')
         self.dataset.add_property('creator', person)
-
         self.dataset.add_property('version', "1.0.0")
         self.dataset.add_property('description', "This is the best dataset.")
         self.dataset.add_property('name', "Dinosaur Dataset")
         self.dataset.add_property('thumbnailUrl', 'https://vsoch.github.io/datasets/assets/img/avocado.png')
         self.dataset.add_property('about', "This is a dataset")
+        download = Schema('DataDownload')
+        download.add_property('contentUrl', 'https://vsoch.github.io/datasets/assets/img/avocado.png')
+        download.add_property('encodingFormat', 'CSV')
+        self.dataset.add_property('distribution', [download])
         self.recipe.validate(self.dataset)        
 
     def tearDown(self):
