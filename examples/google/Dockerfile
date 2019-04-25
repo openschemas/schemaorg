@@ -19,6 +19,4 @@ ENV RPCPORT=4000
 EXPOSE 4000/tcp  
   
 ADD versions entrypoint /  
-ENTRYPOINT ["/entrypoint"]  
-  
-
+ENTRYPOINT ["/entrypoint"]

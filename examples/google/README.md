@@ -3,7 +3,7 @@
 This is an example of using schema.org to label a Dockerfile, and a Singularity Recipe.
 Specifically, we are following the Google Dataset guidelines, but pretending that they
 encompass a SoftwareSourceCode (e.g., a container recipe such as a Docker or Singularity
-recipe file). The example is shown in [parse_dataset.py](parse_dataset.py)
+recipe file). The example is shown in [extract_SoftwareSourceCode.py](extract_SoftwareSourceCode.py)
 and files included here are described in more detail below. Before running
 these examples, make sure you have installed the module.
 
@@ -132,6 +132,7 @@ python extract_ContainerRecipe.py
 ```
 
 The above is missing the most important part - tags based on the software found with
-container-diff! I need to do some poking around to see how I want to do this.
+container-diff! We can use container-diff to extract this metadata too, and add a list
+to the extraction for software dependencies.
 
-**being written**
+See the [extractors](https://github.com/openschemas/extractors) repository for more examples.
