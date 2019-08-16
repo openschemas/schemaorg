@@ -1,7 +1,7 @@
 # Schemaorg Example Parser
 
 This is an example of using schema.org to label a Dockerfile, and a Singularity Recipe.
-Specifically, we are following the Google Dataset guidelines, but pretending that they
+Note that updated examples are kept separately in [openbases/extract-dockerfile](https://www.github.com/openbases/extract-dockerfile). Specifically, we are following the Google Dataset guidelines, but pretending that they
 encompass a SoftwareSourceCode (e.g., a container recipe such as a Docker or Singularity
 recipe file). The example is shown in [extract_SoftwareSourceCode.py](extract_SoftwareSourceCode.py)
 and files included here are described in more detail below. Before running

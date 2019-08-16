@@ -146,8 +146,8 @@ Python [Dockerfile parser](https://singularityhub.github.io/singularity-cli/reci
 pip install spython
 ```
 ```python
-from spython.main.parse import DockerRecipe
-parser = DockerRecipe("Dockerfile")
+from spython.main.parse.parsers import DockerParser
+parser = DockerParser("Dockerfile").parse()
 ```
 Now here is how I add a property. Let's add the obvious ones from the Dockerfile.
 
