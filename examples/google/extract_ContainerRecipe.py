@@ -53,8 +53,8 @@ print(recipe.loaded)
 
 # Step 3: Extract Container Things! First, the recipe file
 
-from spython.main.parse import DockerRecipe
-parser = DockerRecipe("Dockerfile")
+from spython.main.parse.parsers import DockerParser
+parser = DockerParser('Dockerfile').parse()
 
 # containerRecipe.properties
 
