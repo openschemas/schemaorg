@@ -16,6 +16,7 @@ Critical items to know are:
 versions here coincide with releases on pypi.
 
 ## [master](https://github.com/openschemas/schemaorg/tree/master)
+ - updating to latest version 5.0 (0.0.22)
  - Added download link to pages (0.0.21)
  - Added additional templates for rendering into tables (0.0.20)
  - Forgot to add url to the ContactPoint in function to create person! (0.0.19)
