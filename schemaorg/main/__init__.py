@@ -24,8 +24,7 @@ from schemaorg.utils import (
     print_json,
     read_csv,
     read_file,
-    read_yaml,
-    _read_yaml
+    read_yaml
 )
 from schemaorg.data import (
     find_similar_types, 
@@ -38,6 +37,7 @@ import json
 import os
 import re
 import sys
+import yaml
 
 class Schema(object):
 
@@ -203,7 +203,7 @@ class Schema(object):
         '''
         if file_path.endswith('html'):
             stream = read_file(file_path, readlines=False)
-            self.loaded = _read_yaml(stream, quiet=True)
+            self.loaded = yaml.load(stream, Loader=yaml.FullLoader)
 
         # Yaml file
         else:

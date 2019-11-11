@@ -115,9 +115,9 @@ the python library.
 ```python
 spec = Schema("SoftwareSourceCode")
 Specification base set to http://www.schema.org
-Using Version 3.4
+Using Version 5.0
 Found http://www.schema.org/SoftwareSourceCode
-SoftwareSourceCode: found 101 properties
+SoftwareSourceCode: found 104 properties
 ```
 It's pretty straight forward - we read in the specification from the library,
 it tells us the version, and the number of properties. Now let's read in our
@@ -175,6 +175,7 @@ When you are done, validate your specification.
 ```python
 recipe.validate(spec)
 ```
+
 ### 7. Embed in HTML with json-ld
 
 The module includes a simple html template to embed the html and make
