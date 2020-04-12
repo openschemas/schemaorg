@@ -94,5 +94,4 @@ if __name__ == "__main__":
               'Topic :: Scientific/Engineering',
               'Operating System :: Unix',
               'Programming Language :: Python :: 3',
-          ])#,
-          #entry_points = {'console_scripts': [ 'puzzles=puzzles.solver:main' ] })
+          ])
