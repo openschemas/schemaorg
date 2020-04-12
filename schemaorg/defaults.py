@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2018-2019 Vanessa Sochat.
+Copyright (C) 2018-2020 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
 from schemaorg.logger import bot
-from schemaorg.utils import ( get_userhome )
 import tempfile
 import os
 import sys
@@ -69,8 +68,6 @@ def getenv(variable_key, default=None, required=False, silent=True):
 #########################
 # Global Settings
 #########################
-
-USERHOME = get_userhome()
 
 # Version of schema.org to use, defaults to latest in list of installed
 SCHEMAORG_VERSION = getenv('SCHEMAORG_VERSION')

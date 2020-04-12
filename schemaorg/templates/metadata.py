@@ -2,7 +2,7 @@
 
 Interaction with metadata and properties
 
-Copyright (C) 2018-2019 Vanessa Sochat.
+Copyright (C) 2018-2020 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by

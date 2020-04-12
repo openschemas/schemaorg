@@ -1,6 +1,6 @@
 '''
 
-Copyright (C) 2018-2019 Vanessa Sochat.
+Copyright (C) 2018-2020 Vanessa Sochat.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
@@ -19,7 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import hashlib
 import errno
-import pwd
 import re
 import shutil
 import tempfile
@@ -142,11 +141,6 @@ def get_tmpdir(requested_tmpdir=None, prefix="", create=True):
         os.mkdir(tmpdir)
 
     return tmpdir
-
-def get_userhome():
-    '''get the user home based on the effective uid
-    '''
-    return pwd.getpwuid(os.getuid())[5]
 
 
 def get_content_hash(contents):

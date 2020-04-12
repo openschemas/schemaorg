@@ -9,7 +9,7 @@ import os
 def get_lookup():
     '''get version by way of version.py, returns a 
     lookup dictionary with several global variables without
-    needing to import singularity
+    needing to import schemaorg
     '''
     lookup = dict()
     version_file = os.path.join('schemaorg', 'version.py')

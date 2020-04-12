@@ -240,3 +240,11 @@ this would be useful to you!
 
  - [openbases/extractor-dockerfile](https://www.github.com/openbases/extractor-dockerfile) is an minimal example showing how to extract metadata for a Dockerfile, for each of a containerRecipe and SoftwareSourceCode.
  - [Zenodo-ml](https://vsoch.github.io/zenodo-ml/) is an example of using the default template (google/visual-dataset.html) to render metadata about a dataset.
+
+## Updating
+
+If you want to use a version of schemaorg that is not provided, you can download
+the [schemaorg/schemaorg](https://github.com/schemaorg/schemaorg) repository
+and move the content of a version subfolder in `data/releases/<version>` into
+`schemaorg/data/releases/<version>` here. The same can be done for the entire
+content of the current extensions (`data/ext`) folder into `schemaorg/data/ext`.
