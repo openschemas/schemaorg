@@ -16,6 +16,7 @@ Critical items to know are:
 versions here coincide with releases on pypi.
 
 ## [master](https://github.com/openschemas/schemaorg/tree/master)
+ - bug with unwrapping lists of properties (0.0.24)
  - removing unneeded dependency of pwd, updating to 5.1 (0.0.23)
  - updating to latest version 5.0 (0.0.22)
  - Added download link to pages (0.0.21)
