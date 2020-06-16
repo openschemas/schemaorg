@@ -46,8 +46,8 @@ def unwrap_properties(metadata):
             unwrapped[prop] = unwrap_properties(value.properties)
             unwrapped[prop].update({'@type': value.type})
         elif isinstance(value, list):
+            items = []
             for item in value:
-                items = []
                 if isinstance(item, Schema):
                     new_item = unwrap_properties(item.properties)
                     new_item.update({'@type': item.type})
