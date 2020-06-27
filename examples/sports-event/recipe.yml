@@ -1,0 +1,23 @@
+version: 1
+schemas:
+  SportsEvent:
+    recommended:
+      - inLanguage
+      - isAccessibleForFree
+      - location
+      - maximumAttendeeCapacity
+      - url
+    required:
+      - description
+      - name
+      - competitor
+      - homeTeam
+      - awayTeam
+  SportsTeam:
+     required:
+      - athlete
+      - coach
+  Person:
+    required:
+      - description
+      - name
