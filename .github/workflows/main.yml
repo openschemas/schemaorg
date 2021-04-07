@@ -1,0 +1,24 @@
+name: singularity-hpc
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches_ignore: []
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup black linter
+        run: conda create --quiet --name schemaorg pyaml
+
+      - name: Install and test schemaorg
+        run: |
+          export PATH="/usr/share/miniconda/bin:$PATH"
+          source activate black
+          pip install .
+          pytest -sv schemaorg/tests/*.py
