@@ -4,7 +4,7 @@ __license__ = "MPL 2.0"
 
 __version__ = "0.1.0"
 AUTHOR = 'Vanessa Sochat'
-AUTHOR_EMAIL = '@vsoch'
+AUTHOR_EMAIL = 'vsoch@users.noreply.github.com'
 NAME = 'schemaorg'
 PACKAGE_URL = "https://github.com/openschemas/schemaorg"
 KEYWORDS = 'openschemas, schema.org'
