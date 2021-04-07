@@ -1,21 +1,6 @@
-'''
-
-Copyright (C) 2018 Vanessa Sochat.
-
-This program is free software: you can redistribute it and/or modify it
-under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or (at your
-option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public
-License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-'''
+__author__ = "Vanessa Sochat"
+__copyright__ = "Copyright 2018-2021, Vanessa Sochat"
+__license__ = "MPL 2.0"
 
 from schemaorg.utils import ( get_installdir, read_csv )
 from schemaorg.logger import bot
@@ -32,8 +17,9 @@ def get_versions():
     '''
     base = get_database()
     versions = os.listdir(os.path.join(base, "releases"))
+    versions = [float(x) for x in versions]
     versions.sort()
-    return versions
+    return [str(x) for x in versions]
 
 def get_schemaorg_version():
     '''determine the schemaorg version to use based on an environmental variable
@@ -72,8 +58,8 @@ ext-attic-properties.csv   ext-meta-properties.csv
 ext-attic-types.csv        ext-meta-types.csv
 ext-auto-properties.csv    ext-pending-properties.csv
 ext-auto-types.csv         ext-pending-types.csv
-ext-bib-properties.csv     schema-properties.csv
-ext-bib-types.csv          schema-types.csv
+ext-bib-properties.csv     schemaorg-all-https-properties.csv
+ext-bib-types.csv          schemaorg-all-http-types.csv
 '''
 
 def read_properties_csv(keyfield='id', version=None):
@@ -87,7 +73,7 @@ def read_properties_csv(keyfield='id', version=None):
        version: release version under data/releases to use, defaults to latest
     '''
     release_dir = get_release(version=version)
-    filename = os.path.join(release_dir, 'schema-properties.csv')
+    filename = os.path.join(release_dir, 'schemaorg-all-https-properties.csv')
     return read_csv(filename, keyfield=keyfield)
 
 
@@ -101,7 +87,7 @@ def read_types_csv(keyfield='label', version=None):
        version: release version under data/releases to use, defaults to latest
     '''
     release_dir = get_release(version = version)
-    filename = os.path.join(release_dir, 'schema-types.csv')
+    filename = os.path.join(release_dir, 'schemaorg-all-https-types.csv')
     return read_csv(filename, keyfield=keyfield)
 
 

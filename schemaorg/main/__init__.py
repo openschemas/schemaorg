@@ -1,23 +1,6 @@
-'''
-
-A class to represent a specification schema
-
-Copyright (C) 2018-2020 Vanessa Sochat.
-
-This program is free software: you can redistribute it and/or modify it
-under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or (at your
-option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public
-License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-'''
+__author__ = "Vanessa Sochat"
+__copyright__ = "Copyright 2018-2021, Vanessa Sochat"
+__license__ = "MPL 2.0"
 
 from schemaorg.utils import ( 
     get_installdir, 
@@ -69,7 +52,7 @@ class Schema(object):
         '''
         # Default to schema.org
         if base is None:
-            base = "http://www.schema.org"
+            base = "https://www.schema.org"
 
         # Must be a url, starting with http or https
         if not re.search("^http", base):
@@ -180,7 +163,7 @@ class Schema(object):
         '''
         # Keep property definitions here
         self._properties = dict()
-
+        
         # If we are given a file, it's likely a custom specification
         if os.path.isfile(schema_type):
             self._load_custom_type(schema_type)
@@ -240,7 +223,7 @@ class Schema(object):
         props = self.loaded[key]
 
         for prop in props:
-            name = "http://schema.org/%s" % prop[field]
+            name = "https://schema.org/%s" % prop[field]
 
             self._properties[prop[field]] = dict()
   

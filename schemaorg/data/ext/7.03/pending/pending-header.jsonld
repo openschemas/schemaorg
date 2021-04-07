@@ -1,7 +1,0 @@
-{
-    "@context": {
-		"schema": "http://schema.org/",
-		"pending": "http://pending.schema.org/"
-	},
-    "@id": "http://pending.schema.org"
-}
