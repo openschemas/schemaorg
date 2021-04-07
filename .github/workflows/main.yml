@@ -19,6 +19,6 @@ jobs:
       - name: Install and test schemaorg
         run: |
           export PATH="/usr/share/miniconda/bin:$PATH"
-          source activate black
+          source activate schemaorg
           pip install .
           pytest -sv schemaorg/tests/*.py
