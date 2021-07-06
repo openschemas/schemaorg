@@ -164,7 +164,7 @@ def write_file(filename, content, mode="w"):
     '''write_file will open a file, "filename" and write content, "content"
        and properly close the file
     '''
-    with open(filename, mode) as filey:
+    with open(filename, mode, encoding="utf-8") as filey:
         filey.writelines(content)
     return filename
 
@@ -173,7 +173,7 @@ def read_file(filename, mode="r", readlines=True):
     '''write_file will open a file, "filename" and write content, "content"
        and properly close the file
     '''
-    with open(filename, mode) as filey:
+    with open(filename, mode, encoding="utf-8") as filey:
         if readlines is True:
             content = filey.readlines()
         else:
@@ -198,7 +198,7 @@ def write_yaml(yaml_dict, filename, mode="w"):
        filename: the output file to write to
        pretty_print: if True, will use nicer formatting
     '''
-    with open(filename, mode) as filey:
+    with open(filename, mode, encoding="utf-8") as filey:
         filey.writelines(yaml.dump(yaml_dict))
     return filename
 
@@ -235,7 +235,7 @@ def write_json(json_obj, filename, mode="w", print_pretty=True):
        filename: the output file to write to
        pretty_print: if True, will use nicer formatting
     '''
-    with open(filename, mode) as filey:
+    with open(filename, mode, encoding="utf-8") as filey:
         if print_pretty:
             filey.writelines(print_json(json_obj))
         else:
@@ -259,7 +259,7 @@ def read_json(filename, mode='r'):
     '''read_json reads in a json file and returns
        the data structure as dict.
     '''
-    with open(filename, mode) as filey:
+    with open(filename, mode, encoding="utf-8") as filey:
         data = json.load(filey)
     return data
 
@@ -284,7 +284,7 @@ def read_csv(filename, mode='r', delim=',', header=None, keyfield=None):
     if keyfield is not None:
         data = dict()
 
-    with open(filename, mode='r') as csv_file:
+    with open(filename, mode='r', encoding="utf-8") as csv_file:
         csv_reader = csv.DictReader(csv_file, fieldnames=header)
         for row in csv_reader:
             if keyfield is not None:
