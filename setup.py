@@ -13,7 +13,7 @@ def get_lookup():
     '''
     lookup = dict()
     version_file = os.path.join('schemaorg', 'version.py')
-    with open(version_file) as filey:
+    with open(version_file, encoding="utf8") as filey:
         exec(filey.read(), lookup)
     return lookup
 
