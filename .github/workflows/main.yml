@@ -1,4 +1,4 @@
-name: singularity-hpc
+name: test-schemaorg
 
 on:
   push:
