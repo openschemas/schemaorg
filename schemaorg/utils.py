@@ -266,15 +266,6 @@ def read_json(filename, mode='r'):
 
 # csv
 
-def process_csv(data, csv_file, header, keyfield):
-    csv_reader = csv.DictReader(csv_file, fieldnames=header)
-    for row in csv_reader:
-        if keyfield is not None:
-            data[row[keyfield]] = row
-        else:
-            data.append(row)
-    return data
-
 def read_csv(filename, mode='r', delim=',', header=None, keyfield=None):
     '''read a comma separated value file, with default delimiter as comma.
        we assume reading a header, and use some identifier as key.
@@ -293,10 +284,11 @@ def read_csv(filename, mode='r', delim=',', header=None, keyfield=None):
     if keyfield is not None:
         data = dict()
 
-    try:
-        with open(filename, mode='r') as csv_file:
-            data = process_csv(data, csv_file, header, keyfield)
-    except UnicodeDecodeError:
-        with open(filename, mode='r', encoding = 'cp850') as csv_file:
-            data = process_csv(data, csv_file, header, keyfield)
+    with open(filename, mode='r') as csv_file:
+        csv_reader = csv.DictReader(csv_file, fieldnames=header)
+        for row in csv_reader:
+            if keyfield is not None:
+                data[row[keyfield]] = row
+            else:
+                data.append(row)
     return data
