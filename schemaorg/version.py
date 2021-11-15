@@ -2,7 +2,7 @@ __author__ = "Vanessa Sochat"
 __copyright__ = "Copyright 2018-2021, Vanessa Sochat"
 __license__ = "MPL 2.0"
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 AUTHOR = 'Vanessa Sochat'
 AUTHOR_EMAIL = 'vsoch@users.noreply.github.com'
 NAME = 'schemaorg'

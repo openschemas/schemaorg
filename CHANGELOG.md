@@ -16,6 +16,7 @@ Critical items to know are:
 versions here coincide with releases on pypi.
 
 ## [master](https://github.com/openschemas/schemaorg/tree/master)
+ - changed read encoding to UTF-8 (0.1.1)
  - adding release 12.0 (different file structure, so we are deleting old versions) (0.1.0)
  - bug with unwrapping lists of properties (0.0.24)
  - removing unneeded dependency of pwd, updating to 5.1 (0.0.23)
